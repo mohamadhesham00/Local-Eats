@@ -8,14 +8,14 @@ namespace UserManagementSystem.Src.web.Controllers
     public class UserController : ControllerBase
     {
         
-        [HttpPost]
+        [HttpPost("login")]
         
         public async Task<IActionResult> Login()
         {
             var user = Request.Body;
             Console.WriteLine(user);
 
-            return Ok(user);
+            return new JsonResult(user);
         }
 
     }
