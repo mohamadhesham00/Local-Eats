@@ -13,6 +13,6 @@ public class SeedersRunner {
 
     public void Run()
     {
-        // UserSeeder.SeedUsers(_dbContext, _passwordHashService);
+        UserSeeder.SeedUsers(_dbContext, _passwordHashService);
     }
 }
