@@ -1,7 +1,8 @@
 {
    "tasks": [
       {
-         "command": "cd ./scripts/git_hooks && sh pre-commit.sh"
+         "command": "sh",
+         "args": ["./scripts/format.sh"]
       },
       {
          "name": "Welcome",
