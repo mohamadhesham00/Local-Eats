@@ -7,11 +7,12 @@ namespace UserManagementSystem.Src.Web.Controllers
     public class UserController : ControllerBase
     {
         private readonly ILoginCommandHandler _loginCommandHandler;
-        public UserController(ILoginCommandHandler loginCommandHandler) {
+        public UserController(ILoginCommandHandler loginCommandHandler)
+        {
             _loginCommandHandler = loginCommandHandler;
         }
 
-        [HttpPost("login")]      
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginCommand loginCommand)
         {
             try

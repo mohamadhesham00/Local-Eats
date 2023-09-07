@@ -9,12 +9,14 @@ internal sealed class JwtProvider : IJWTProvider
 {
     private readonly JwtOptions _options;
 
-    public JwtProvider(IOptions<JwtOptions> options) {
+    public JwtProvider(IOptions<JwtOptions> options)
+    {
         _options = options.Value;
     }
-    public string Generate(User user) {
+    public string Generate(User user)
+    {
 
-        var claims = new Claim[] 
+        var claims = new Claim[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email)

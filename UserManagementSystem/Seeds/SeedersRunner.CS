@@ -1,7 +1,8 @@
 using UserManagementSystem.Seeds;
 using UserManagementSystem.Src.Infrastructure.Db;
 
-public class SeedersRunner {
+public class SeedersRunner
+{
     private readonly ApplicationDbContext _dbContext;
     private readonly IPasswordHashService _passwordHashService;
 

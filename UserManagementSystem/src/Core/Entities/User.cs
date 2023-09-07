@@ -6,7 +6,8 @@ namespace UserManagementSystem.Src.Core.Entities
     [Table("Users")]
     public class User
     {
-        public User(string firstName, string lastName, string email, string password) {
+        public User(string firstName, string lastName, string email, string password)
+        {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
