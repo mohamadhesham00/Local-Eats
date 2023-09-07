@@ -1,8 +1,12 @@
 #!/bin/bash
 
-# cd ../UserManagementSystem
+pwd
 
-# dotnet format
+cd ./UserManagementSystem
+
+pwd
+
+dotnet format
 
 exit 0
 
