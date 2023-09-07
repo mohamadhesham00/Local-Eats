@@ -1,9 +1,7 @@
 {
    "tasks": [
       {
-         "command": "dotnet",
-         "args": ["format", "--include", "${staged}"],
-         "include": ["**/*.cs", "**/*.vb"]
+         "command": "cd ./scripts/git_hooks && sh pre-commit.sh"
       },
       {
          "name": "Welcome",
