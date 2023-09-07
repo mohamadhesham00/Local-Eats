@@ -2,8 +2,7 @@
    "tasks": [
       {
          "command": "dotnet",
-         "group": "backend",
-         "args": ["dotnet-format", "--include", "${staged}"],
+         "args": ["format", "--include", "${staged}"],
          "include": ["**/*.cs", "**/*.vb"]
       },
       {
