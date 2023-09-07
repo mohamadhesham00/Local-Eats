@@ -15,35 +15,21 @@ public class LoginCommandHandler : ILoginCommandHandler
     }
     public async Task<string> Execute(LoginCommand command)
     {
-        try
+        User? user = await _userRepo.FindByEmailAsync(command.Email);
+
+        if (user == null)
         {
-            User? user = await _userRepo.FindByEmailAsync(command.Email);
-
-            if (user == null)
-            {
-                // TODO: throw domain defined errors
-                throw new ArgumentNullException($"Can't find user with email {command.Email}");
-            }
-
-            bool isValidPassword = _passwordHashService.VerifyPassword(command.Password, user.Password);
-
-            if (!isValidPassword)
-            {
-                throw new InvalidOperationException("Invalid Password");
-            }
-
-            return _jwtProvider.Generate(user);
+            throw new UserNotFoundException($"Can't find user with email {command.Email}");
         }
-        catch (ArgumentNullException e)
+
+        bool isValidPassword = _passwordHashService.VerifyPassword(command.Password, user.Password);
+
+        if (!isValidPassword)
         {
-            Console.WriteLine($"Null exception: {e.Message}");
-            throw e;
+            throw new InvalidCredentialsException();
         }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Unexpected Error {e.Message}");
-            throw e;
-        }
+
+        return _jwtProvider.Generate(user);
 
     }
 }

@@ -19,13 +19,13 @@ namespace UserManagementSystem.Src.Web.Controllers
                 string token = await _loginCommandHandler.Execute(loginCommand);
                 return Ok(new { Token = token });
             }
-            catch (InvalidOperationException)
+            catch (InvalidCredentialsException e)
             {
-                return Unauthorized(new { Message = "Invalid Password" });
+                return Unauthorized(new { e.Message });
             }
-            catch (ArgumentNullException)
+            catch (UserNotFoundException e)
             {
-                return BadRequest(new { Message = "User was not found" });
+                return BadRequest(new { e.Message });
             }
             catch (Exception)
             {
