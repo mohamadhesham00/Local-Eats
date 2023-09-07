@@ -2,7 +2,7 @@
    "tasks": [
       {
          "command": "sh",
-         "args": ["./scripts/format.sh"]
+         "args": ["scripts/format.sh"]
       },
       {
          "name": "Welcome",
