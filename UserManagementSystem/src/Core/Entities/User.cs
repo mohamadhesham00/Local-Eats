@@ -1,16 +1,26 @@
-﻿namespace UserManagementSystem.Src.Core.Entities
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace UserManagementSystem.Src.Core.Entities
 {
+    [Table("Users")]
     public class User
     {
-        private string Id;
+        [Key]
+        public Guid Id { get; set; }
 
-        private string FirstName;
+        [Required]
+        public required string FirstName { get; set; }
 
-        private string LastName;
+        [Required]
+        public required string LastName { get; set; }
 
-        private string Email;
+        [Required]
+        [EmailAddress]
+        public required string Email { get; set; }
 
-        private string Password;
-
+        [Required]
+        public required string Password { get; set; }
     }
 }
