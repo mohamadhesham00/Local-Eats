@@ -1,10 +1,6 @@
 #!/bin/bash
 
-pwd
-
 cd ./UserManagementSystem
-
-pwd
 
 dotnet format
 
