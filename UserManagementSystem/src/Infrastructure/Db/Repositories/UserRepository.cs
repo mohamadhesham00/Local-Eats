@@ -11,13 +11,8 @@ public class UserRepository : IUserRepository
         _dbContext = dbContext;
     }
 
-    public async Task<User> FindByEmailAsync(string email)
+    public async Task<User?> FindByEmailAsync(string email)
     {
-        User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
-        if (user == null)
-        {
-            throw new ArgumentNullException();
-        }
-        return user;
+        return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
     }
 }

@@ -17,7 +17,13 @@ public class LoginCommandHandler : ILoginCommandHandler
     {
         try
         {
-            User user = await _userRepo.FindByEmailAsync(command.Email);
+            User? user = await _userRepo.FindByEmailAsync(command.Email);
+
+            if (user == null)
+            {
+                // TODO: throw domain defined errors
+                throw new ArgumentNullException($"Can't find user with email {command.Email}");
+            }
 
             bool isValidPassword = _passwordHashService.VerifyPassword(command.Password, user.Password);
 
@@ -30,14 +36,14 @@ public class LoginCommandHandler : ILoginCommandHandler
         }
         catch (ArgumentNullException e)
         {
-            Console.WriteLine($"User with email {command.Email} was not found");
+            Console.WriteLine($"Null exception: {e.Message}");
             throw e;
         }
         catch (Exception e)
-            {
-                Console.WriteLine($"Unexpected Error {e.Message}");
-                throw e;
-            }
+        {
+            Console.WriteLine($"Unexpected Error {e.Message}");
+            throw e;
+        }
 
     }
 }

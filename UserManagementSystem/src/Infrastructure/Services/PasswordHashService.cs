@@ -1,4 +1,3 @@
-using BCrypt.Net;
 public class PasswordHashService : IPasswordHashService
 {
     public string HashPassword(string password)
