@@ -1,8 +1,8 @@
 #!/bin/bash
 
-cd ../UserManagementSystem
+# cd ../UserManagementSystem
 
-dotnet format
+# dotnet format
 
 exit 0
 
