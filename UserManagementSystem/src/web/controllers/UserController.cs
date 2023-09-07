@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace UserManagementSystem.Src.Web.Controllers
 {
@@ -12,7 +11,6 @@ namespace UserManagementSystem.Src.Web.Controllers
             _loginCommandHandler = loginCommandHandler;
         }
 
-        [Authorize]
         [HttpPost("login")]      
         public async Task<IActionResult> Login([FromBody] LoginCommand loginCommand)
         {
