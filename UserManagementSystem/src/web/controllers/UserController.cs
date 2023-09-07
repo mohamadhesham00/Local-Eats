@@ -6,7 +6,6 @@ namespace UserManagementSystem.Src.web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-
     public class UserController : ControllerBase
     {
         private readonly ILoginCommandHandler _loginCommandHandler;
@@ -14,7 +13,8 @@ namespace UserManagementSystem.Src.web.Controllers
             _loginCommandHandler = loginCommandHandler;
         }
 
-        [HttpPost("login")]        
+        [Authorize]
+        [HttpPost("login")]      
         public async Task<IActionResult> Login([FromBody] LoginCommand loginCommand)
         {
             try
@@ -24,7 +24,7 @@ namespace UserManagementSystem.Src.web.Controllers
             }
             catch (InvalidOperationException)
             {
-                return BadRequest(new { Message = "Invalid operation" });
+                return Unauthorized(new { Message = "Invalid Password" });
             }
             catch (ArgumentNullException)
             {

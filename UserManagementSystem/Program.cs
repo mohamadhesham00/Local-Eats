@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using UserManagementSystem.Src.Infrastructure.Db;
 using UserManagementSystem.Src.UseCases.login;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -17,14 +17,13 @@ builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJWTProvider, JwtProvider>();
 
-
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer();
 
 builder.Services.ConfigureOptions<JwtOptionsSetup>();
 builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -34,10 +33,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+SeedersRunner seederRunner = new SeedersRunner(app.Services.GetRequiredService<ApplicationDbContext>(), app.Services.GetRequiredService<IPasswordHashService>());
+seederRunner.Run();
 
 app.Run();

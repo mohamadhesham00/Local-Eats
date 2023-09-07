@@ -4,7 +4,7 @@ using UserManagementSystem.Src.Infrastructure.Db;
 
 public class UserRepository : IUserRepository
 {
-    private readonly ApplicationDbContext _dbContext; // Replace with your database context
+    private readonly ApplicationDbContext _dbContext;
 
     public UserRepository(ApplicationDbContext dbContext)
     {

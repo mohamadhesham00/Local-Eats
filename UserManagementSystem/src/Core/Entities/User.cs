@@ -7,20 +7,26 @@ namespace UserManagementSystem.Src.Core.Entities
     [Table("Users")]
     public class User
     {
+        public User(string firstName, string lastName, string email, string password) {
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            Password = password;
+        }
         [Key]
         public Guid Id { get; set; }
 
         [Required]
-        public required string FirstName { get; set; }
+        public string FirstName { get; set; }
 
         [Required]
-        public required string LastName { get; set; }
+        public string LastName { get; set; }
 
         [Required]
         [EmailAddress]
-        public required string Email { get; set; }
+        public string Email { get; set; }
 
         [Required]
-        public required string Password { get; set; }
+        public string Password { get; set; }
     }
 }

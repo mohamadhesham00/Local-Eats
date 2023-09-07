@@ -5,7 +5,6 @@ using Microsoft.IdentityModel.Tokens;
 
 public class JwtBearerOptionsSetup : IConfigureOptions<JwtBearerOptions>
 {
-    private const string SectionName = "JWT";
     private readonly JwtOptions _jwtOptions;
 
     public JwtBearerOptionsSetup(IOptions<JwtOptions> jwtOptions)
@@ -15,12 +14,16 @@ public class JwtBearerOptionsSetup : IConfigureOptions<JwtBearerOptions>
 
     public void Configure(JwtBearerOptions options)
     {
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
         options.TokenValidationParameters = new()
         {
-            ValidateIssuer = false,
-            ValidateAudience = false,
+            ValidateIssuer = true,
+            ValidateAudience = true,
             ValidateIssuerSigningKey = true,
             ValidateLifetime = true,
+            ValidIssuer = _jwtOptions.Issuer,
+            ValidAudience = _jwtOptions.Audience,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.SecretKey))
         };
     }

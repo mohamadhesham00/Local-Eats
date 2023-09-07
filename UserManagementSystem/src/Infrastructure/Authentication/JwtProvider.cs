@@ -20,17 +20,16 @@ internal sealed class JwtProvider : IJWTProvider
             new Claim(JwtRegisteredClaimNames.Email, user.Email)
         };
 
-        var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey)), SecurityAlgorithms.HmacSha256);
+        SigningCredentials signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey)), SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
             _options.Issuer,
             _options.Audience,
             claims,
             null,
-            DateTime.UtcNow.AddHours(1),
+            DateTime.UtcNow.AddHours(24),
             signingCredentials
         );
-
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }

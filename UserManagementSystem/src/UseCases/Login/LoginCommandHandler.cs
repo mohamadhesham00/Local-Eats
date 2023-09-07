@@ -30,9 +30,14 @@ public class LoginCommandHandler : ILoginCommandHandler
         }
         catch (ArgumentNullException e)
         {
-            Console.WriteLine($"User was not found");
+            Console.WriteLine($"User with email {command.Email} was not found");
             throw e;
         }
+        catch (Exception e)
+            {
+                Console.WriteLine($"Unexpected Error {e.Message}");
+                throw e;
+            }
 
     }
 }
