@@ -1,0 +1,18 @@
+{
+   "tasks": [
+      {
+         "command": "sh",
+         "args": ["scripts/format.sh"]
+      },
+      {
+         "name": "Welcome",
+         "output": "always",
+         "command": "bash",
+         "args": ["-c", "echo  🌈 Nice work! 🥂"],
+         "windows": {
+            "command": "cmd",
+            "args": ["/c", "echo  🌈 Nice work! 🥂"]
+         }
+      }
+   ]
+}
