@@ -6,8 +6,9 @@ public class LoginCommandHandler : ILoginCommandHandler
 {
     private readonly IPasswordHashService _passwordHashService;
     private readonly IUserRepository _userRepo;
-    private readonly IJWTProvider _jwtProvider; public LoginCommandHandler(IPasswordHashService passwordHashService, IUserRepository userRepo, IJWTProvider jwtProvider)
-    {
+    private readonly IJWTProvider _jwtProvider;
+
+    public LoginCommandHandler(IPasswordHashService passwordHashService, IUserRepository userRepo, IJWTProvider jwtProvider)  {
         _passwordHashService = passwordHashService;
         _userRepo = userRepo;
         _jwtProvider = jwtProvider;
@@ -16,7 +17,7 @@ public class LoginCommandHandler : ILoginCommandHandler
     {
         User? user = await _userRepo.FindByEmailAsync(command.Email);
 
-        if (user == null)
+        if(user == null)
         {
             throw new UserNotFoundException($"Can't find user with email {command.Email}");
         }
