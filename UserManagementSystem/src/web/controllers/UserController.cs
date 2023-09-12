@@ -1,38 +1,34 @@
-﻿using Microsoft.AspNetCore.Mvc;
+namespace UserManagementSystem.Src.Web.Controllers;
 
-namespace UserManagementSystem.Src.Web.Controllers
+using Microsoft.AspNetCore.Mvc;
+
+[ApiController]
+[Route("api/[controller]")]
+public class UserController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UserController : ControllerBase
+    private readonly ILoginCommandHandler loginCommandHandler;
+    public UserController(ILoginCommandHandler loginCommandHandler) => this.loginCommandHandler = loginCommandHandler;
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginCommand loginCommand)
     {
-        private readonly ILoginCommandHandler _loginCommandHandler;
-        public UserController(ILoginCommandHandler loginCommandHandler)
+        try
         {
-            _loginCommandHandler = loginCommandHandler;
+            var token = await this.loginCommandHandler.Execute(loginCommand);
+            return this.Ok(new { Token = token });
         }
-
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginCommand loginCommand)
+        catch (InvalidCredentialsException e)
         {
-            try
-            {
-                string token = await _loginCommandHandler.Execute(loginCommand);
-                return Ok(new { Token = token });
-            }
-            catch (InvalidCredentialsException e)
-            {
-                return Unauthorized(new { e.Message });
-            }
-            catch (UserNotFoundException e)
-            {
-                return BadRequest(new { e.Message });
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error" });
-            }
+            return this.Unauthorized(new { e.Message });
         }
-
+        catch (UserNotFoundException e)
+        {
+            return this.BadRequest(new { e.Message });
+        }
+        catch (Exception)
+        {
+            return this.StatusCode(500, new { Message = "Internal Server Error" });
+        }
     }
+
 }
