@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using UserManagementSystem.Src.Infrastructure.Db;
-using UserManagementSystem.Src.UseCases.login;
+using UserManagementSystem.Src.UseCases.Login;
 
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -23,7 +23,7 @@ builder.Services.ConfigureOptions<JwtOptionsSetup>();
 
 
 // Authentication
-JwtOptions jwtOptions = new JwtOptions();
+var jwtOptions = new JwtOptions();
 builder.Configuration.GetSection("JWT").Bind(jwtOptions);
 
 builder.Services.AddAuthentication(options =>
@@ -31,22 +31,19 @@ builder.Services.AddAuthentication(options =>
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(o =>
+}).AddJwtBearer(o => o.TokenValidationParameters = new TokenValidationParameters
 {
-    o.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtOptions.Issuer,
-        ValidAudience = jwtOptions.Audience,
-        IssuerSigningKey = new SymmetricSecurityKey
+    ValidateIssuer = true,
+    ValidateAudience = true,
+    ValidateLifetime = true,
+    ValidateIssuerSigningKey = true,
+    ValidIssuer = jwtOptions.Issuer,
+    ValidAudience = jwtOptions.Audience,
+    IssuerSigningKey = new SymmetricSecurityKey
         (Encoding.UTF8.GetBytes(jwtOptions.SecretKey)),
-    };
 });
 
-WebApplication app = builder.Build();
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -1,35 +1,29 @@
-using UserManagementSystem.Src.Core.Entities;
-
-namespace UserManagementSystem.Src.UseCases.login;
+﻿namespace UserManagementSystem.Src.UseCases.Login;
 
 public class LoginCommandHandler : ILoginCommandHandler
 {
-    private readonly IPasswordHashService _passwordHashService;
-    private readonly IUserRepository _userRepo;
-    private readonly IJWTProvider _jwtProvider;
+    private readonly IPasswordHashService passwordHashService;
+    private readonly IUserRepository userRepo;
+    private readonly IJWTProvider jwtProvider;
 
-    public LoginCommandHandler(IPasswordHashService passwordHashService, IUserRepository userRepo, IJWTProvider jwtProvider)  {
-        _passwordHashService = passwordHashService;
-        _userRepo = userRepo;
-        _jwtProvider = jwtProvider;
-    }
-    public async Task<string> Execute(LoginCommand command)
+    public LoginCommandHandler(IPasswordHashService passwordHashService, IUserRepository userRepo, IJWTProvider jwtProvider)
     {
-        User? user = await _userRepo.FindByEmailAsync(command.Email);
+        this.passwordHashService = passwordHashService;
+        this.userRepo = userRepo;
+        this.jwtProvider = jwtProvider;
+    }
+    public async Task<string> Execute(LoginCommand loginCommand)
+    {
+        var user = await this.userRepo.FindByEmailAsync(loginCommand.Email) ?? throw new UserNotFoundException($"Can't find user with email {loginCommand.Email}");
 
-        if(user == null)
-        {
-            throw new UserNotFoundException($"Can't find user with email {command.Email}");
-        }
-
-        bool isValidPassword = _passwordHashService.VerifyPassword(command.Password, user.Password);
+        var isValidPassword = this.passwordHashService.VerifyPassword(loginCommand.Password, user.Password);
 
         if (!isValidPassword)
         {
             throw new InvalidCredentialsException();
         }
 
-        return _jwtProvider.Generate(user);
+        return this.jwtProvider.Generate(user);
 
     }
 }

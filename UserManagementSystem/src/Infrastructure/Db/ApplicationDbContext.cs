@@ -1,48 +1,40 @@
-﻿using Microsoft.EntityFrameworkCore;
+namespace UserManagementSystem.Src.Infrastructure.Db;
+using Microsoft.EntityFrameworkCore;
 using UserManagementSystem.Src.Core.Entities;
 
-namespace UserManagementSystem.Src.Infrastructure.Db
+public class ApplicationDbContext : DbContext
 {
-    public class ApplicationDbContext : DbContext
+    private readonly IPasswordHashService passwordHashService;
+
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IPasswordHashService passwordHashService) : base(options) => this.passwordHashService = passwordHashService;
+    public DbSet<User> Users { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        private readonly IPasswordHashService _passwordHashService;
+        modelBuilder.Entity<User>(entity => entity.HasIndex(e => e.Email).IsUnique());
+        base.OnModelCreating(modelBuilder);
+        this.SeedUsers(modelBuilder);
+    }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IPasswordHashService passwordHashService) : base(options)
-        {
-            _passwordHashService = passwordHashService;
-        }
-        public DbSet<User> Users { get; set; }
+    private void SeedUsers(ModelBuilder modelBuilder)
+    {
+        var users = this.GetSeedUsers();
+        modelBuilder.Entity<User>().HasData(users);
+    }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+    private List<User> GetSeedUsers()
+    {
+        var userPassword = this.passwordHashService.HashPassword("mohamed@localeats.com");
+        User user = new("Mohamed", "Hesham", "mohamed@localeats.com", userPassword)
         {
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.HasIndex(e => e.Email).IsUnique();
-            });
-            base.OnModelCreating(modelBuilder);
-            this.seedUsers(modelBuilder);
-        }
-
-        private void seedUsers(ModelBuilder modelBuilder)
+            Id = Guid.NewGuid()
+        };
+        var scndUserPassword = this.passwordHashService.HashPassword("abdelrahman@localeats.com");
+        User scndUser = new("Abdelrahman", "Omran", "abdelrahman@localeats.com", scndUserPassword)
         {
-            List<User> users = getSeedUsers();
-            modelBuilder.Entity<User>().HasData(users);
-        }
-
-        private List<User> getSeedUsers()
-        {
-            string userPassword = _passwordHashService.HashPassword("mohamed@localeats.com");
-            User user = new("Mohamed", "Hesham", "mohamed@localeats.com", userPassword)
-            {
-                Id = Guid.NewGuid()
-            };
-            string scndUserPassword = _passwordHashService.HashPassword("abdelrahman@localeats.com");
-            User scndUser = new("Abdelrahman", "Omran", "abdelrahman@localeats.com", scndUserPassword)
-            {
-                Id = Guid.NewGuid()
-            };
-            List<User> users = new() { user, scndUser };
-            return users;
-        }
+            Id = Guid.NewGuid()
+        };
+        List<User> users = new() { user, scndUser };
+        return users;
     }
 }

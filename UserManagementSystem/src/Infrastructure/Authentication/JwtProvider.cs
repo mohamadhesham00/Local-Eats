@@ -7,26 +7,23 @@ using UserManagementSystem.Src.Core.Entities;
 
 internal sealed class JwtProvider : IJWTProvider
 {
-    private readonly JwtOptions _options;
+    private readonly JwtOptions options;
 
-    public JwtProvider(IOptions<JwtOptions> options)
-    {
-        _options = options.Value;
-    }
+    public JwtProvider(IOptions<JwtOptions> options) => this.options = options.Value;
     public string Generate(User user)
     {
 
         var claims = new Claim[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email)
+            new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new(JwtRegisteredClaimNames.Email, user.Email)
         };
 
-        SigningCredentials signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey)), SecurityAlgorithms.HmacSha256);
+        var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.options.SecretKey)), SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            _options.Issuer,
-            _options.Audience,
+            this.options.Issuer,
+            this.options.Audience,
             claims,
             null,
             DateTime.UtcNow.AddHours(24),
