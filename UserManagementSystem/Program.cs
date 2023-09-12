@@ -62,7 +62,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-SeedersRunner seederRunner = new SeedersRunner(app.Services.GetRequiredService<ApplicationDbContext>(), app.Services.GetRequiredService<IPasswordHashService>());
-seederRunner.Run();
-
 app.Run();

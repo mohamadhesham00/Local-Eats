@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UserManagementSystem.Src.Infrastructure.Db;
@@ -11,9 +12,11 @@ using UserManagementSystem.Src.Infrastructure.Db;
 namespace UserManagementSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230912090416_AddUserEmailIndex")]
+    partial class AddUserEmailIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,24 +53,6 @@ namespace UserManagementSystem.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("64973898-05bd-42b5-b10c-3b9ab8bcffff"),
-                            Email = "mohamed@localeats.com",
-                            FirstName = "Mohamed",
-                            LastName = "Hesham",
-                            Password = "$2a$11$tNIisxr8dllvFKUW.d5if.o1sonXfU.EaxFmAqxlOYMlWtqNdLXau"
-                        },
-                        new
-                        {
-                            Id = new Guid("58cd96c2-6a4c-494a-ad7c-090022a0710b"),
-                            Email = "abdelrahman@localeats.com",
-                            FirstName = "Abdelrahman",
-                            LastName = "Omran",
-                            Password = "$2a$11$yoy18ypb41gPTqASazMbG.qRhUD6V57GLhDLJh7nBrpn9NJvkTzHG"
-                        });
                 });
 #pragma warning restore 612, 618
         }
