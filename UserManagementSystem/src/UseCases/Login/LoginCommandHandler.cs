@@ -6,8 +6,7 @@ public class LoginCommandHandler : ILoginCommandHandler
 {
     private readonly IPasswordHashService _passwordHashService;
     private readonly IUserRepository _userRepo;
-    private readonly IJWTProvider _jwtProvider;
-    public LoginCommandHandler(IPasswordHashService passwordHashService, IUserRepository userRepo, IJWTProvider jwtProvider)
+    private readonly IJWTProvider _jwtProvider; public LoginCommandHandler(IPasswordHashService passwordHashService, IUserRepository userRepo, IJWTProvider jwtProvider)
     {
         _passwordHashService = passwordHashService;
         _userRepo = userRepo;
