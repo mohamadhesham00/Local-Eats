@@ -1,4 +1,4 @@
-﻿namespace UserManagementSystem.Src.UseCases.Login;
+namespace UserManagementSystem.Src.UseCases.Login;
 
 public class LoginCommandHandler : ILoginCommandHandler
 {
