@@ -2,7 +2,7 @@
 
 cd ./UserManagementSystem
 
-dotnet format
+dotnet format ./UserManagementSystem.sln
 
 exit 0
 

@@ -4,15 +4,9 @@ using UserManagementSystem.Src.Infrastructure.Db;
 
 public class UserRepository : IUserRepository
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly ApplicationDbContext dbContext;
 
-    public UserRepository(ApplicationDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    public UserRepository(ApplicationDbContext dbContext) => this.dbContext = dbContext;
 
-    public async Task<User?> FindByEmailAsync(string email)
-    {
-        return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
-    }
+    public async Task<User?> FindByEmailAsync(string email) => await this.dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
 }
