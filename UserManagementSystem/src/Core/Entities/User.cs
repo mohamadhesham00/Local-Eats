@@ -3,7 +3,6 @@ namespace UserManagementSystem.Src.Core.Entities;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-[Table("Users")]
 public class User
 {
     public User(string firstName, string lastName, string email, string password)
