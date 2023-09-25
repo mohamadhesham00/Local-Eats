@@ -4,14 +4,6 @@ using System.ComponentModel.DataAnnotations;
 
 public class User
 {
-    public User(string firstName, string lastName, string email, string password)
-    {
-        this.FirstName = firstName;
-        this.LastName = lastName;
-        this.Email = email;
-        this.Password = password;
-    }
-    [Key]
     public Guid Id { get; set; }
 
     [Required]
