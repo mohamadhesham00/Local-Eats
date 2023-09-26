@@ -10,24 +10,23 @@ namespace RestaurantManagementSystem.src.web.Controllers
     public class RestaurantController: ControllerBase
     {
         private readonly IRegisterRequestCommandHandler _requesthandler;
-        private readonly IEmailConfirmationHandler  _emailhandler;
+        private readonly IEmailConfirmationHandler  _emailconfirmationhandler;
         public RestaurantController (IRegisterRequestCommandHandler requesthandler, IEmailConfirmationHandler emailConfirmation)
         {
            _requesthandler = requesthandler;
-           _emailhandler = emailConfirmation;
+           _emailconfirmationhandler = emailConfirmation;
         }
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestCommand registerCommand)
         {
             _requesthandler.Execute(registerCommand.Name, registerCommand.Email
-            , registerCommand.Address, registerCommand.ContactInfo);
+            , registerCommand.Address, registerCommand.contactinfoemail,registerCommand.contactinfophonenumber);
             return Ok();
         }
         [HttpPost("EmailConfirmation")]
-        public async 
-            Task<IActionResult> EmailConfirmation([FromBody] ConfirmationCommand confirmationCommand)
+        public async Task<IActionResult> EmailConfirmation([FromBody] ConfirmationCommand confirmationCommand)
         {
-            bool result = _emailhandler.Confirm(confirmationCommand).Result;
+            bool result = _emailconfirmationhandler.VerifyEmail(confirmationCommand).Result;
             if (result)
             {
                 return Ok(new { Message = "Email Confirmed Sucessfully" });
@@ -37,5 +36,7 @@ namespace RestaurantManagementSystem.src.web.Controllers
                 return BadRequest(new { Message = "Email confirmation failed." });
             }
         }
+
+
     }
 }

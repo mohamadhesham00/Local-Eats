@@ -1,11 +1,7 @@
-﻿namespace RequestStatus
+﻿public enum Status
 {
-    public enum Status
-    {
-        PendingVerification,
-        WaitingForAdminResponse,
-        Approved,
-        Rejected
-    }
-
+    PendingVerification,
+    WaitingForAdminResponse,
+    Approved,
+    Rejected
 }

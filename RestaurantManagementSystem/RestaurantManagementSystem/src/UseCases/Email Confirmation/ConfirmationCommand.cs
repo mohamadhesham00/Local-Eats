@@ -3,6 +3,6 @@
     public class ConfirmationCommand
     {
         public string RequestId { get; set; }
-        public string ConfirmationCode { get; set; }
+        public string VerificationCode { get; set; }
     }
 }

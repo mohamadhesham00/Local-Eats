@@ -2,7 +2,8 @@
 using System.Net.Mail;
 using System.Net;
 using Microsoft.AspNetCore.Http.HttpResults;
-
+using RestaurantManagementSystem.src.Core.Entities;
+using RestaurantManagementSystem.src.Core.Exceptions;
 
 namespace RestaurantManagementSystem.src.Infrastructure.Services
 {
@@ -13,7 +14,21 @@ namespace RestaurantManagementSystem.src.Infrastructure.Services
         {
             _conf = conf;
         }
-        public async Task<string> SendEmail (string recipientEmail,string MessageSubject,string MessageBody)
+
+        public void SendConfirmationEmail(string recipientEmail, Guid Id, string VerificationCode)
+        {
+            string MessageBody = "You need to vertify your Email to Complete Your Request \n Your Request ID is : " + Id + "\n" + " Your code is " + VerificationCode;
+            string MessageSubject = "Email Confirmation";
+            SendEmail(recipientEmail, MessageSubject,MessageBody);
+        }
+
+
+        public void SendAddedToWaitingListEmail (string recipientEmail) {
+            string MessageSubject = "Email Confirmed";
+            string MessageBody = "Email Confirmed Successfullly \n Your Restaurant is now on the waiting list";
+            SendEmail(recipientEmail, MessageSubject,MessageBody);
+        }
+        private async void SendEmail (string recipientEmail,string MessageSubject,string MessageBody)
         {
             string? senderEmail = _conf["SmtpSettings:Email"];
             string? senderPassword = _conf["SmtpSettings:Password"];
@@ -29,12 +44,11 @@ namespace RestaurantManagementSystem.src.Infrastructure.Services
                 try
                 {
                     await smtpClient.SendMailAsync(mailMessage);
-                    return ("Email sent successfully.");
                     
                 }
                 catch (Exception ex)
                 {
-                    throw new ($"Error sending email: {ex.Message}");
+                    throw new EmailSendingException();
                 }
             }
 

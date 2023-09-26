@@ -6,7 +6,7 @@ namespace RestaurantManagementSystem.src.UseCases.Register
     public interface IRegisterRequestCommandHandler
     {
         void Execute(string name, string email
-            , string address, ContactInfo contact);
+            , string address, string contactinfoemail, string contactinfophonenumber);
 
     }
 }

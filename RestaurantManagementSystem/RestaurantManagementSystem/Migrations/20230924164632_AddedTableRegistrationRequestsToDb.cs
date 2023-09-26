@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RestaurantManagementSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedTableToDb : Migration
+    public partial class AddedTableRegistrationRequestsToDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

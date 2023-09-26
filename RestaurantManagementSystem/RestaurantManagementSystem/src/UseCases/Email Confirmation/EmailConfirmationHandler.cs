@@ -6,24 +6,21 @@ namespace RestaurantManagementSystem.src.UseCases.Email_Confirmation
 {
     public class EmailConfirmationHandler : IEmailConfirmationHandler
     {
-        private readonly IRestaurantRepo _restaurantRepo;
+        private readonly IRegistrationRequestRepo _restaurantRepo;
         private readonly IEmailService _emailservice;
-        public EmailConfirmationHandler (IRestaurantRepo restaurantRepo,IEmailService emailservice)
+        public EmailConfirmationHandler (IRegistrationRequestRepo restaurantRepo,IEmailService emailservice)
         {
             _restaurantRepo = restaurantRepo;
             _emailservice = emailservice;
         }
-        public async Task<bool> Confirm(ConfirmationCommand confirmationCommand)
+        public async Task<bool> VerifyEmail(ConfirmationCommand confirmationCommand)
         {
-            Guid id = new Guid(confirmationCommand.RequestId);
-            RegistrationRequest obj = await _restaurantRepo.FindByIdAsync(id);
-            if (obj.Status == RequestStatus.Status.PendingVerification)
-            {
-                RegistrationRequest Updated = RegistrationRequest.VertifyCode(confirmationCommand.ConfirmationCode, obj);
-                if (Updated.Status == RequestStatus.Status.WaitingForAdminResponse)
+            RegistrationRequest obj = await _restaurantRepo.FindByIdAsync(confirmationCommand.RequestId);
+            obj.VertifyCode(confirmationCommand.VerificationCode);
+            if (obj != null && obj.Status == Status.WaitingForAdminResponse)
                 {
-                    _restaurantRepo.Update(Updated);
-                    _emailservice.SendEmail(Updated.Email, "Email Confirmed", "Email Confirmed Successfullly \n Your Restaurant is now on the waiting list");
+                    _restaurantRepo.Update(obj);
+                    _emailservice.SendAddedToWaitingListEmail(obj.Email);
                     return true;
                 }
                 else
@@ -31,8 +28,6 @@ namespace RestaurantManagementSystem.src.UseCases.Email_Confirmation
                     return false;
                 }
             }
-            else
-                return false;
         }
     }
-}
+

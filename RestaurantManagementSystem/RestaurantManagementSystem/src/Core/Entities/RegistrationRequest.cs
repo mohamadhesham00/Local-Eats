@@ -20,7 +20,7 @@ namespace RestaurantManagementSystem.src.Core.Entities
         [Required]
         public ContactInfo ContactInfo { get;  }
         public string VerificationCode { get; }
-        public RequestStatus.Status Status { get; private set; }
+        public Status Status { get; private set; }
         public DateTime DateCreated {  get; }
         public DateTime VerificationCodeExpiresAt {  get; }
 
@@ -31,7 +31,7 @@ namespace RestaurantManagementSystem.src.Core.Entities
         private RegistrationRequest(Guid id, string name, string email
             , string address, ContactInfo contactInfo
             , string verificationcode
-            , RequestStatus.Status status, DateTime datecreated
+            , Status status, DateTime datecreated
             , DateTime verificationcodeexpiresat)
         {
             this.Id = id;
@@ -46,24 +46,26 @@ namespace RestaurantManagementSystem.src.Core.Entities
         }
         //create method
         public static RegistrationRequest Create(string name, string email
-            , string address, ContactInfo contact, RequestStatus.Status status, string verificationcode
+            , string address, string contactinfoemail, string contactinfophonenumber,Status status, string verificationcode
             )
         {
             Guid id = Guid.NewGuid();
             DateTime datecreated = DateTime.Now.ToUniversalTime();
             DateTime verificationvodeexpiresAt = datecreated.AddHours(24);
-            
+            ContactInfo contact = ContactInfo.Create(contactinfoemail, contactinfophonenumber);
             return new RegistrationRequest(id, name, email, address, contact, verificationcode, status, datecreated, verificationvodeexpiresAt);
         }
 
         //check if they are equal 
-        public static RegistrationRequest VertifyCode(string providedcode, RegistrationRequest obj)
+        
+        public  void VertifyCode(string providedcode)
         {
-            if(providedcode == obj.VerificationCode)
-            {
-                obj.Status = RequestStatus.Status.WaitingForAdminResponse;
+            if(this.Status ==Status.PendingVerification){
+                if (providedcode == this.VerificationCode)
+                {
+                    this.Status = Status.WaitingForAdminResponse;
+                }
             }
-            return (obj);
         }
         
     }

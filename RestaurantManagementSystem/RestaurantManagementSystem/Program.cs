@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RestaurantManagementSystem.src.Core.Contracts;
 using RestaurantManagementSystem.src.Infrastructure.Db;
-using RestaurantManagementSystem.src.Infrastructure.RegisterRestaurant;
 using RestaurantManagementSystem.src.Infrastructure.Services;
 using RestaurantManagementSystem.src.Infrastructure.Services.Repositories;
 using RestaurantManagementSystem.src.UseCases.Email_Confirmation;
@@ -17,9 +16,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddScoped<IRequestRestaurant, RequestRestaurant>();
 builder.Services.AddScoped<IRegisterRequestCommandHandler, RegisterRequestCommandHandler>();
-builder.Services.AddScoped<IRestaurantRepo, RestaurantRepo>();
+builder.Services.AddScoped<IRegistrationRequestRepo, RegistrationRequestRepo>();
 builder.Services.AddScoped<IEmailConfirmationHandler, EmailConfirmationHandler>();
 
 var app = builder.Build();

@@ -1,7 +1,11 @@
-﻿namespace RestaurantManagementSystem.src.Core.Contracts
+﻿using RestaurantManagementSystem.src.Core.Entities;
+
+namespace RestaurantManagementSystem.src.Core.Contracts
 {
     public interface IEmailService
     {
-        public Task<string> SendEmail(string recipientEmail, string MessageSubject, string body);
+        public void SendConfirmationEmail(string recipientEmail, Guid Id ,string VerificationCode);
+        public void SendAddedToWaitingListEmail(string recipientEmail);
+
     }
 }
