@@ -5,26 +5,27 @@ using RestaurantManagementSystem.src.Core.Entities;
 using RestaurantManagementSystem.src.Infrastructure.Services;
 using shortid.Configuration;
 using shortid;
+using RestaurantManagementSystem.src.Infrastructure.Services.CodeGenerator;
 
 namespace RestaurantManagementSystem.src.UseCases.Register
 {
     public class RegisterRequestCommandHandler : IRegisterRequestCommandHandler
     {
-        private readonly IRegistrationRequestRepo registrationRequestRepo;
+        private readonly IRegistrationRequestRepo _registrationRequestRepo;
         private readonly IEmailService _emailService;
 
-        public RegisterRequestCommandHandler(IRegistrationRequestRepo _registrationRequestRepo, IEmailService emailService)
+        public RegisterRequestCommandHandler(IRegistrationRequestRepo registrationRequestRepo, IEmailService emailService)
         {
-            registrationRequestRepo = _registrationRequestRepo;
+            _registrationRequestRepo = _registrationRequestRepo;
             _emailService = emailService;
         }
         public void Execute(string name, string email
             , string address, string contactinfoemail, string contactinfophonenumber)
         {
-            string verificationcode = registrationRequestRepo.GenerateVerificationCode();
-            RegistrationRequest obj = RegistrationRequest.Create(name,email,address,contactinfoemail, contactinfophonenumber, Status.PendingVerification,verificationcode);
-            registrationRequestRepo.AddRequest(obj);
-            _emailService.SendConfirmationEmail(obj.Email, obj.Id,obj.VerificationCode);
+            string verificationcode = GenerateVerificationCode.Generate();
+            RegistrationRequest registrationRequest = RegistrationRequest.Create(name,email,address,contactinfoemail, contactinfophonenumber,verificationcode);
+            _registrationRequestRepo.AddRequest(registrationRequest);
+            _emailService.SendConfirmationEmail(registrationRequest.Email, registrationRequest.Id, registrationRequest.VerificationCode);
 
         }
     }

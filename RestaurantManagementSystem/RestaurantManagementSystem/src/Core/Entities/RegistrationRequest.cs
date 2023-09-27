@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using shortid;
 using shortid.Configuration;
+using RestaurantManagementSystem.src.Core.Exceptions;
 
 namespace RestaurantManagementSystem.src.Core.Entities
 {
@@ -19,8 +20,8 @@ namespace RestaurantManagementSystem.src.Core.Entities
         public string Address { get; }
         [Required]
         public ContactInfo ContactInfo { get;  }
-        public string VerificationCode { get; }
-        public Status Status { get; private set; }
+        public string VerificationCode { get; private set; }
+        public RegistrationRequestStatus Status { get; private set; }
         public DateTime DateCreated {  get; }
         public DateTime VerificationCodeExpiresAt {  get; }
 
@@ -31,7 +32,7 @@ namespace RestaurantManagementSystem.src.Core.Entities
         private RegistrationRequest(Guid id, string name, string email
             , string address, ContactInfo contactInfo
             , string verificationcode
-            , Status status, DateTime datecreated
+            , RegistrationRequestStatus status, DateTime datecreated
             , DateTime verificationcodeexpiresat)
         {
             this.Id = id;
@@ -46,27 +47,32 @@ namespace RestaurantManagementSystem.src.Core.Entities
         }
         //create method
         public static RegistrationRequest Create(string name, string email
-            , string address, string contactinfoemail, string contactinfophonenumber,Status status, string verificationcode
+            , string address, string contactinfoemail, string contactinfophonenumber, string verificationcode
             )
         {
             Guid id = Guid.NewGuid();
-            DateTime datecreated = DateTime.Now.ToUniversalTime();
-            DateTime verificationvodeexpiresAt = datecreated.AddHours(24);
-            ContactInfo contact = ContactInfo.Create(contactinfoemail, contactinfophonenumber);
-            return new RegistrationRequest(id, name, email, address, contact, verificationcode, status, datecreated, verificationvodeexpiresAt);
+            ContactInfo Contact = ContactInfo.Create(contactinfoemail, contactinfophonenumber);
+            RegistrationRequestStatus Status = RegistrationRequestStatus.PendingVerification;
+            DateTime DateCreated = DateTime.Now.ToUniversalTime();
+            DateTime VerificationCodeExpiresAt = DateCreated.AddHours(24);
+            return new RegistrationRequest(id, name, email, address, Contact, verificationcode, Status, DateCreated, VerificationCodeExpiresAt);
         }
 
         //check if they are equal 
         
         public  void VertifyCode(string providedcode)
         {
-            if(this.Status ==Status.PendingVerification){
-                if (providedcode == this.VerificationCode)
-                {
-                    this.Status = Status.WaitingForAdminResponse;
-                }
+            if(this.Status != RegistrationRequestStatus.PendingVerification)
+            {
+                throw new EmailIsAlreadyConfirmedException();
             }
+            if (providedcode != this.VerificationCode)
+            {
+                throw new WrongVerificationCodeException();
+            }
+            this.Status = RegistrationRequestStatus.WaitingForAdminResponse;
+            this.VerificationCode = null;
         }
-        
+
     }
 }

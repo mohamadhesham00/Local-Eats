@@ -5,7 +5,7 @@ namespace RestaurantManagementSystem.src.Core.Contracts
     public interface IEmailService
     {
         public void SendConfirmationEmail(string recipientEmail, Guid Id ,string VerificationCode);
-        public void SendAddedToWaitingListEmail(string recipientEmail);
+        public void SendEmailConfirmedEmail(string recipientEmail);
 
     }
 }

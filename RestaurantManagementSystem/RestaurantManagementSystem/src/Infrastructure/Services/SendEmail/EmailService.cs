@@ -23,7 +23,7 @@ namespace RestaurantManagementSystem.src.Infrastructure.Services
         }
 
 
-        public void SendAddedToWaitingListEmail (string recipientEmail) {
+        public void SendEmailConfirmedEmail (string recipientEmail) {
             string MessageSubject = "Email Confirmed";
             string MessageBody = "Email Confirmed Successfullly \n Your Restaurant is now on the waiting list";
             SendEmail(recipientEmail, MessageSubject,MessageBody);

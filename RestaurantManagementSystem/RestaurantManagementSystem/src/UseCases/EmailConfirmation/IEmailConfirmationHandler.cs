@@ -2,6 +2,6 @@
 {
     public interface IEmailConfirmationHandler
     {
-        public Task<bool> VerifyEmail(ConfirmationCommand confirmationCommand);
+        public void VerifyEmail(ConfirmationCommand confirmationCommand);
     }
 }

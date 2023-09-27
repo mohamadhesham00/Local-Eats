@@ -4,6 +4,7 @@ using RestaurantManagementSystem.src.Infrastructure.Db;
 using RestaurantManagementSystem.src.Infrastructure.Services;
 using RestaurantManagementSystem.src.Infrastructure.Services.Repositories;
 using RestaurantManagementSystem.src.UseCases.Email_Confirmation;
+using RestaurantManagementSystem.src.UseCases.GetRegistrationRequests;
 using RestaurantManagementSystem.src.UseCases.Register;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IRegisterRequestCommandHandler, RegisterRequestCommandHandler>();
 builder.Services.AddScoped<IRegistrationRequestRepo, RegistrationRequestRepo>();
 builder.Services.AddScoped<IEmailConfirmationHandler, EmailConfirmationHandler>();
+builder.Services.AddScoped<IGetRequestsHandler, GetRequestsHandler>();
 
 var app = builder.Build();
 

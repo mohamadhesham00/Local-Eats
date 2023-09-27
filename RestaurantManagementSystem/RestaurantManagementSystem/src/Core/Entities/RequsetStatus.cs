@@ -1,4 +1,4 @@
-﻿public enum Status
+﻿public enum RegistrationRequestStatus
 {
     PendingVerification,
     WaitingForAdminResponse,

@@ -37,13 +37,11 @@ namespace RestaurantManagementSystem.src.Infrastructure.Services.Repositories
             _db.RegistrationRequests.Update(registrationRequest);
             _db.SaveChanges();
         }
-
-        public string GenerateVerificationCode()
+        public  Task<List<RegistrationRequest>> GetRegistrationRequestsAsync()
         {
-            //for specifing what random code contains
-            var options = new GenerationOptions(useNumbers: true, useSpecialCharacters: false, length: 8);
-            string verificationcode = ShortId.Generate(options);
-            return verificationcode;
+            var list =  _db.RegistrationRequests.Where(r => r.Status == RegistrationRequestStatus.WaitingForAdminResponse).ToListAsync();
+            return list; 
         }
+        
     }
 }
