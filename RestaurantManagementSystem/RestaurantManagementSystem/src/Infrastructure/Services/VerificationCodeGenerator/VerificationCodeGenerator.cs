@@ -3,7 +3,7 @@ using shortid;
 
 namespace RestaurantManagementSystem.src.Infrastructure.Services.CodeGenerator
 {
-    public class GenerateVerificationCode
+    public class VerificationCodeGenerator
     {
         public static string Generate()
         {

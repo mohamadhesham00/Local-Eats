@@ -19,11 +19,11 @@ namespace RestaurantManagementSystem.src.UseCases.Register
             _registrationRequestRepo = _registrationRequestRepo;
             _emailService = emailService;
         }
-        public void Execute(string name, string email
-            , string address, string contactinfoemail, string contactinfophonenumber)
+        public void Execute(RegisterRequestCommand registerCommand)
         {
-            string verificationcode = GenerateVerificationCode.Generate();
-            RegistrationRequest registrationRequest = RegistrationRequest.Create(name,email,address,contactinfoemail, contactinfophonenumber,verificationcode);
+            string verificationcode = VerificationCodeGenerator.Generate();
+            RegistrationRequest registrationRequest = RegistrationRequest.Create(registerCommand.Name, registerCommand.Email
+                , registerCommand.Address, registerCommand.contactinfoemail, registerCommand.contactinfophonenumber,verificationcode);
             _registrationRequestRepo.AddRequest(registrationRequest);
             _emailService.SendConfirmationEmail(registrationRequest.Email, registrationRequest.Id, registrationRequest.VerificationCode);
 

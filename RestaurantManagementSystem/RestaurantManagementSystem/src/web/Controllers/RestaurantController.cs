@@ -13,28 +13,27 @@ namespace RestaurantManagementSystem.src.web.Controllers
     public class RestaurantController: ControllerBase
     {
         private readonly IRegisterRequestCommandHandler _requesthandler;
-        private readonly IEmailConfirmationHandler  _emailconfirmationhandler;
+        private readonly IVerifyRequestCommandHandler  _vertifyrequestcommandhandler;
         private readonly IGetRequestsHandler _getRequestsHandler;
-        public RestaurantController (IRegisterRequestCommandHandler requesthandler, IEmailConfirmationHandler emailConfirmation
+        public RestaurantController (IRegisterRequestCommandHandler requesthandler, IVerifyRequestCommandHandler vertifyrequestcommandhandler
             , IGetRequestsHandler getRequestsHandler)
         {
            _requesthandler = requesthandler;
-           _emailconfirmationhandler = emailConfirmation;
+            _vertifyrequestcommandhandler = vertifyrequestcommandhandler;
             _getRequestsHandler = getRequestsHandler;
         }
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestCommand registerCommand)
         {
-            _requesthandler.Execute(registerCommand.Name, registerCommand.Email
-            , registerCommand.Address, registerCommand.contactinfoemail,registerCommand.contactinfophonenumber);
+            _requesthandler.Execute(registerCommand);
             return Ok();
         }
         [HttpPost("VerifyRequest")]
-        public async Task<IActionResult> VerifyRequest([FromBody] ConfirmationCommand confirmationCommand)
+        public async Task<IActionResult> VerifyRequest([FromBody] VerifyRequestCommand confirmationCommand)
         {
             try
             {
-                _emailconfirmationhandler.VerifyEmail(confirmationCommand);
+                _vertifyrequestcommandhandler.VerifyRegistrationRequest(confirmationCommand);
                 return Ok(new { Message = "Email Confirmed Sucessfully" });
 
             }catch (Exception ex)
@@ -47,9 +46,10 @@ namespace RestaurantManagementSystem.src.web.Controllers
         [HttpGet("RegistrationRequests/GetAll")]
         public async Task <IActionResult> GetRequests()
         {
-            List<RegistrationRequest> list = await _getRequestsHandler.GetRequests();
+            List<RestaurantRegistrationResponseDTO> list = await _getRequestsHandler.GetRequests();
             return Ok(list);
         }
+
         [HttpPost("RegistrationRequests/{id}/approve")]
         public async Task<IActionResult> approve (int id)
         {

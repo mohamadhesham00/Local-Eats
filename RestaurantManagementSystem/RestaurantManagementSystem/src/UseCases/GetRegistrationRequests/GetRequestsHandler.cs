@@ -1,6 +1,7 @@
 ﻿using RestaurantManagementSystem.src.Core.Contracts;
 using RestaurantManagementSystem.src.Core.Entities;
 using RestaurantManagementSystem.src.Infrastructure.Db;
+using RestaurantManagementSystem.src.UseCases.Register;
 
 namespace RestaurantManagementSystem.src.UseCases.GetRegistrationRequests
 {
@@ -11,10 +12,11 @@ namespace RestaurantManagementSystem.src.UseCases.GetRegistrationRequests
             _registrationrequestrepo = registrationrequestrepo;
         }
 
-        public async Task<List<RegistrationRequest>> GetRequests()
+        public async Task<List<RestaurantRegistrationResponseDTO>> GetRequests()
         {
             List<RegistrationRequest> requests = await _registrationrequestrepo.GetRegistrationRequestsAsync();
-            return requests;
+            
+            return RestaurantRegistrationResponseDTO.from(requests);
         }
     }
 }

@@ -4,6 +4,6 @@ namespace RestaurantManagementSystem.src.UseCases.GetRegistrationRequests
 {
     public interface IGetRequestsHandler
     {
-        public Task<List<RegistrationRequest>> GetRequests();
+        public Task<List<RestaurantRegistrationResponseDTO>> GetRequests();
     }
 }

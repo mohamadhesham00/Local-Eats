@@ -5,16 +5,16 @@ using RestaurantManagementSystem.src.Infrastructure.Services;
 
 namespace RestaurantManagementSystem.src.UseCases.Email_Confirmation
 {
-    public class EmailConfirmationHandler : IEmailConfirmationHandler
+    public class VerifyRequestCommandHandler : IVerifyRequestCommandHandler
     {
         private readonly IRegistrationRequestRepo _registrationRequestRepo;
         private readonly IEmailService _emailservice;
-        public EmailConfirmationHandler (IRegistrationRequestRepo restaurantRepo,IEmailService emailservice)
+        public VerifyRequestCommandHandler (IRegistrationRequestRepo restaurantRepo,IEmailService emailservice)
         {
             _registrationRequestRepo = restaurantRepo;
             _emailservice = emailservice;
         }
-        public async void VerifyEmail(ConfirmationCommand confirmationCommand)
+        public async void VerifyRegistrationRequest(VerifyRequestCommand confirmationCommand)
         {
             RegistrationRequest registrationRequest = await _registrationRequestRepo.FindByIdAsync(confirmationCommand.RequestId);
             registrationRequest.VertifyCode(confirmationCommand.VerificationCode);

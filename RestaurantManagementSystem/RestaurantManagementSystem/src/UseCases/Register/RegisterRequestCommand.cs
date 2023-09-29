@@ -10,5 +10,8 @@ namespace RestaurantManagementSystem.src.UseCases.Register
         public string Address { get; set; }
         public string contactinfoemail { get; set; }
         public string contactinfophonenumber { get; set; }
+
+
     }
+
 }

@@ -19,7 +19,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IRegisterRequestCommandHandler, RegisterRequestCommandHandler>();
 builder.Services.AddScoped<IRegistrationRequestRepo, RegistrationRequestRepo>();
-builder.Services.AddScoped<IEmailConfirmationHandler, EmailConfirmationHandler>();
+builder.Services.AddScoped<IVerifyRequestCommandHandler, VerifyRequestCommandHandler>();
 builder.Services.AddScoped<IGetRequestsHandler, GetRequestsHandler>();
 
 var app = builder.Build();
