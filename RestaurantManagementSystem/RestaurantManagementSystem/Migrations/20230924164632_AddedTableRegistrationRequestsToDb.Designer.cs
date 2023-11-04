@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using RestaurantManagementSystem.src.Infrastructure.Db;
+using RestaurantManagementSystem.src.Infrastructure.Common.Db;
 
 #nullable disable
 
