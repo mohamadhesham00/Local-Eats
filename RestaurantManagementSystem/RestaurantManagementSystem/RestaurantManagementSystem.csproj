@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <Folder Include="src\Infrastructure\Common\Db\Migrations\" />
+    <Folder Include="src\web\NewFolder\" />
   </ItemGroup>
 
 </Project>

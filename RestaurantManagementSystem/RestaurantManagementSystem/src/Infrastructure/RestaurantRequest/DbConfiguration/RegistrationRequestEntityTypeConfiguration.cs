@@ -22,7 +22,7 @@ namespace RestaurantManagementSystem.src.Infrastructure.Configuration
             });
             
             RegistrationRequestconfiguration.Property(r => r.VerificationCode);
-            RegistrationRequestconfiguration.Property(r => r.Status);
+            RegistrationRequestconfiguration.Property(r => r.Status).HasConversion<string>();
             RegistrationRequestconfiguration.Property(r => r.DateCreated);
             RegistrationRequestconfiguration.Property(r => r.VerificationCodeExpiresAt);
 

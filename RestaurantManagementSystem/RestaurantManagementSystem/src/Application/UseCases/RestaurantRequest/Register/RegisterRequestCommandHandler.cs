@@ -22,12 +22,18 @@ namespace RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.
         }
         public async Task Execute(RegisterRequestCommand registerCommand)
         {
-            string verificationcode = VerificationCodeGenerator.Generate();
-            RegistrationRequest registrationRequest = RegistrationRequest.Create(registerCommand.Name, registerCommand.Email
-                , registerCommand.Address, registerCommand.contactinfoemail, registerCommand.contactinfophonenumber, verificationcode);
-            await _registrationRequestRepo.AddRequest(registrationRequest);
-            _emailService.SendConfirmationEmail(registrationRequest.Email, registrationRequest.Id, registrationRequest.VerificationCode);
-
+            try
+            { 
+                string verificationcode = VerificationCodeGenerator.Generate();
+                RegistrationRequest registrationRequest = RegistrationRequest.Create(registerCommand.Name, registerCommand.Email
+                    , registerCommand.Address, registerCommand.contactinfoemail, registerCommand.contactinfophonenumber, verificationcode);
+                await _registrationRequestRepo.AddRequest(registrationRequest);
+                _emailService.SendConfirmationEmail(registrationRequest.Email, registrationRequest.Id, registrationRequest.VerificationCode);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

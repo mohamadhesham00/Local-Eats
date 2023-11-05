@@ -2,6 +2,6 @@
 {
     public interface IVerifyRequestCommandHandler
     {
-        public void VerifyRegistrationRequest(VerifyRequestCommand confirmationCommand);
+        public Task VerifyRegistrationRequest(VerifyRequestCommand confirmationCommand);
     }
 }

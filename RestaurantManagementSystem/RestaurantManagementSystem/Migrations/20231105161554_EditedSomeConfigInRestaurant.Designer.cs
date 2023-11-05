@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RestaurantManagementSystem.src.Core.RestaurantManagement.Entities;
@@ -13,9 +14,11 @@ using RestaurantManagementSystem.src.Infrastructure.Common.Db;
 namespace RestaurantManagementSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231105161554_EditedSomeConfigInRestaurant")]
+    partial class EditedSomeConfigInRestaurant
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,9 +48,8 @@ namespace RestaurantManagementSystem.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.Property<string>("VerificationCode")
                         .IsRequired()

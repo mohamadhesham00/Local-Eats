@@ -28,7 +28,7 @@ namespace RestaurantManagementSystem.src.Infrastructure.Common.Services
             string MessageBody = "Email Confirmed Successfullly \n Your Restaurant is now on the waiting list";
             SendEmail(recipientEmail, MessageSubject,MessageBody);
         }
-        private async void SendEmail (string recipientEmail,string MessageSubject,string MessageBody)
+        private async Task SendEmail (string recipientEmail,string MessageSubject,string MessageBody)
         {
             string? senderEmail = _conf["SmtpSettings:Email"];
             string? senderPassword = _conf["SmtpSettings:Password"];

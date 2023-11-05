@@ -6,7 +6,7 @@ namespace RestaurantManagementSystem.src.Core.Contracts
     {
         public Task AddRequest(RegistrationRequest waitingListRestaurant);
         public Task<RegistrationRequest> FindByIdAsync (string ID);
-        public void Update(RegistrationRequest registrationRequest);
+        public Task Update(RegistrationRequest registrationRequest);
         public Task<List<RegistrationRequest>> GetRegistrationRequestsAsync();
 
     }

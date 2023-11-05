@@ -15,13 +15,19 @@ namespace RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.
             _registrationRequestRepo = restaurantRepo;
             _emailservice = emailservice;
         }
-        public async void VerifyRegistrationRequest(VerifyRequestCommand confirmationCommand)
+        public async Task VerifyRegistrationRequest(VerifyRequestCommand confirmationCommand)
         {
-            RegistrationRequest registrationRequest = await _registrationRequestRepo.FindByIdAsync(confirmationCommand.RequestId);
-            registrationRequest.VertifyCode(confirmationCommand.VerificationCode);
-            _registrationRequestRepo.Update(registrationRequest);
-            _emailservice.SendEmailConfirmedEmail(registrationRequest.Email);
-
+            try
+            {
+                RegistrationRequest registrationRequest = await _registrationRequestRepo.FindByIdAsync(confirmationCommand.RequestId);
+                registrationRequest.VertifyCode(confirmationCommand.VerificationCode);
+                await _registrationRequestRepo.Update(registrationRequest);
+                _emailservice.SendEmailConfirmedEmail(registrationRequest.Email);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

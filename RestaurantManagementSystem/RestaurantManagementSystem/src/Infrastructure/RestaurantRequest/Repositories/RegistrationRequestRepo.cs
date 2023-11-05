@@ -35,22 +35,23 @@ namespace RestaurantManagementSystem.src.Infrastructure.RestaurantRequest.Reposi
             if(registrationRequest != null)
             {
 
-                return registrationRequest;
-            }
-            else
-            {
                 throw new RegistrationRequestNotFoundException();
-
             }
-
+            return registrationRequest;
 
         }
 
-        public async void Update(RegistrationRequest registrationRequest)
+        public async Task Update(RegistrationRequest registrationRequest)
         {
-            _db.RegistrationRequests.Update(registrationRequest);
-            await _mediator.DispatchDomainEventAsync(_db);
-            await _db.SaveChangesAsync();
+            try
+            {
+                await _db.SaveChangesAsync();
+                await _mediator.DispatchDomainEventAsync(_db);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
         public Task<List<RegistrationRequest>> GetRegistrationRequestsAsync()
         {

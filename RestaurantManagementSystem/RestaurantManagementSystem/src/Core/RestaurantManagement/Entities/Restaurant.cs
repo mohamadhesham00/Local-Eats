@@ -15,20 +15,20 @@ namespace RestaurantManagementSystem.src.Core.RestaurantManagement.Entities
         [Required]
         public string Name;
 
-        public string Description;
+        public string? Description;
 
         [Required]
-        public string Address;
+        public string? Address;
 
-        public double AvgRating;
+        public double? AvgRating;
 
         [Required]
-        public ContactInfo ContactInfo;
+        public ContactInfo? ContactInfo;
 
-        public List<DeliveryTime> DeliveryTime;
+        public List<DeliveryTime>? DeliveryTime;
 
         //NavigationProperty
-        public List<RestaurantMenuItem> Menu;
+        public List<RestaurantMenuItem>? Menu;
 
         
     }

@@ -7,6 +7,7 @@ using RestaurantManagementSystem.src.Core.Common.Entities;
 using MediatR;
 using RestaurantManagementSystem.src.Core.RestaurantRequest.DomainEvents;
 using RestaurantManagementSystem.src.Core.Common.Exceptions;
+using RestaurantManagementSystem.src.Core.RestaurantRequest.Exceptions;
 
 namespace RestaurantManagementSystem.src.Core.Entities
 {
@@ -99,11 +100,12 @@ namespace RestaurantManagementSystem.src.Core.Entities
         
         public void ApproveRequest()
         {
-            if(this.Status == RegistrationRequestStatus.WaitingForAdminResponse)
+            if(this.Status != RegistrationRequestStatus.WaitingForAdminResponse)
             {
+                throw new RequestCannotBeAcceptedException();
+            }
                 this.Status = RegistrationRequestStatus.Approved;
                 AddDomainEvent(new RequestApprovedDomainEvent(this));
-            }
         }
 
     }

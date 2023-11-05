@@ -29,15 +29,22 @@ namespace RestaurantManagementSystem.src.web.Controllers.RestaurantRequest.Resta
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestCommand registerCommand)
         {
-            _requesthandler.Execute(registerCommand);
-            return Ok();
+            try
+            {
+                await _requesthandler.Execute(registerCommand);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPost("VerifyRequest")]
         public async Task<IActionResult> VerifyRequest([FromBody] VerifyRequestCommand confirmationCommand)
         {
             try
             {
-                _vertifyrequestcommandhandler.VerifyRegistrationRequest(confirmationCommand);
+                await _vertifyrequestcommandhandler.VerifyRegistrationRequest(confirmationCommand);
                 return Ok(new { Message = "Email Confirmed Sucessfully" });
 
             }catch (Exception ex)

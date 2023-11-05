@@ -18,14 +18,14 @@ namespace RestaurantManagementSystem.src.Application.DomainEventsHandlers.Reques
             _restaurantrepo = restaurantRepo;
         }
         
-        Task INotificationHandler<RequestApprovedDomainEvent>.Handle(RequestApprovedDomainEvent notification, CancellationToken cancellationToken)
+        async Task INotificationHandler<RequestApprovedDomainEvent>.Handle(RequestApprovedDomainEvent notification, CancellationToken cancellationToken)
         {
 
             RegistrationRequest registrationRequest = notification._registrationRequest;
             Restaurant restaurant = _builder.WithId(registrationRequest.Id).WithName(registrationRequest.Name)
             .WithContactInfo(registrationRequest.ContactInfo).WithAddress(registrationRequest.Address)
              .Build();
-            return _restaurantrepo.AddRestaurantAsync(restaurant);
+            await _restaurantrepo.AddRestaurantAsync(restaurant);
         }
     }
 }

@@ -11,17 +11,15 @@ using RestaurantManagementSystem.src.Infrastructure.Common.Db;
 using RestaurantManagementSystem.src.Infrastructure.RestaurantRequest.Repositories;
 using System.Reflection;
 using RestaurantManagementSystem.src.Core.RestaurantManagement.Builder;
+using RestaurantManagementSystem.src.web;
+using RestaurantManagementSystem.src.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddApi();
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
 builder.Services.AddScoped<IRegisterRequestCommandHandler, RegisterRequestCommandHandler>();
 builder.Services.AddScoped<IRegistrationRequestRepo, RegistrationRequestRepo>();
 builder.Services.AddScoped<IVerifyRequestCommandHandler, VerifyRequestCommandHandler>();

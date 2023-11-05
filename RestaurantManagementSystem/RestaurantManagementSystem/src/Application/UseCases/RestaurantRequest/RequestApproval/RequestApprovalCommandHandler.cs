@@ -18,10 +18,10 @@ namespace RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.
 
                 RegistrationRequest registrationRequest = await _registrationRequestRepo.FindByIdAsync(id);
                 registrationRequest.ApproveRequest();
-                _registrationRequestRepo.Update(registrationRequest);
+                await _registrationRequestRepo.Update(registrationRequest);
             }catch (Exception ex)
             {
-                throw new RegistrationRequestNotFoundException();
+                throw new Exception(message: ex.Message);
             }
         }
     }
