@@ -12,10 +12,11 @@ namespace RestaurantManagementSystem.src.Infrastructure.RestaurantManagement.Rep
             _db = db;
             
         }
-        public async Task<int> AddRestaurantAsync(Restaurant restaurant)
+        public async Task AddRestaurantAsync(Restaurant restaurant)
         {
-           await _db.Restaurants.AddAsync(restaurant);
-           return await _db.SaveChangesAsync();
+           Console.WriteLine(_db);
+           await _db.AddAsync(restaurant);
+           await _db.SaveChangesAsync();
         }
         public async Task<int> AddRestaurantMenuItemAsync (List<RestaurantMenuItem> restaurantMenuItems)
         {

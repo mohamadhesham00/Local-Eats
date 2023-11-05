@@ -5,7 +5,7 @@ namespace RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.
 {
     public interface IRegisterRequestCommandHandler
     {
-        void Execute(RegisterRequestCommand registerCommand);
+        Task Execute(RegisterRequestCommand registerCommand);
 
     }
 }

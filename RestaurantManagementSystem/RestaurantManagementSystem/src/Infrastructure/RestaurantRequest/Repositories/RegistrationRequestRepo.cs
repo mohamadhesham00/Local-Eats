@@ -21,9 +21,9 @@ namespace RestaurantManagementSystem.src.Infrastructure.RestaurantRequest.Reposi
             _db = db;
             _mediator = mediator;
         }
-        public async void AddRequest(RegistrationRequest waitingListRestaurant)
+        public async Task AddRequest(RegistrationRequest waitingListRestaurant)
         {
-            _db.RegistrationRequests.Add(waitingListRestaurant);
+            await _db.RegistrationRequests.AddAsync(waitingListRestaurant);
             await _db.SaveChangesAsync();
 
 
@@ -31,7 +31,7 @@ namespace RestaurantManagementSystem.src.Infrastructure.RestaurantRequest.Reposi
         public async Task<RegistrationRequest> FindByIdAsync(string ID)
         {
             Guid id = new Guid(ID);
-            RegistrationRequest registrationRequest = await _db.RegistrationRequests.FirstOrDefaultAsync(u => u.Id == id);
+            RegistrationRequest? registrationRequest = await _db.RegistrationRequests.FirstOrDefaultAsync(u => u.Id == id);
             if(registrationRequest != null)
             {
 

@@ -20,6 +20,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IRegisterRequestCommandHandler, RegisterRequestCommandHandler>();
 builder.Services.AddScoped<IRegistrationRequestRepo, RegistrationRequestRepo>();
@@ -28,7 +29,6 @@ builder.Services.AddScoped<IGetRequestsHandler, GetRequestsHandler>();
 builder.Services.AddScoped<IRequestApprovalCommandHandler, RequestApprovalCommandHandler>();
 builder.Services.AddScoped<IRestaurantRepo, RestaurantRepo>();
 builder.Services.AddScoped<RestaurantBuilder>();
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -14,8 +14,8 @@ using RestaurantManagementSystem.src.Infrastructure.Common.Db;
 namespace RestaurantManagementSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231104141158_AddedRestaurantTableToDb")]
-    partial class AddedRestaurantTableToDb
+    [Migration("20231105135309_AddedRegistrationRequestAndRestaurantTablesToDb")]
+    partial class AddedRegistrationRequestAndRestaurantTablesToDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

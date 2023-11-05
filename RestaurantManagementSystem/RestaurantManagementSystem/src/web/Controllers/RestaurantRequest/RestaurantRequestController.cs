@@ -59,7 +59,7 @@ namespace RestaurantManagementSystem.src.web.Controllers.RestaurantRequest.Resta
         {
             try
             {
-                _requestApprovalCommandHandler.ApproveRequest(id);
+                await _requestApprovalCommandHandler.ApproveRequest(id);
                 return Ok(new { Message = "Requset Approved Sucessfully" });
             }
             catch (Exception ex)

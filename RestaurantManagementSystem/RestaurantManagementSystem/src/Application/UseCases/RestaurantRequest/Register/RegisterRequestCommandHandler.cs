@@ -17,15 +17,15 @@ namespace RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.
 
         public RegisterRequestCommandHandler(IRegistrationRequestRepo registrationRequestRepo, IEmailService emailService)
         {
-            _registrationRequestRepo = _registrationRequestRepo;
+            _registrationRequestRepo = registrationRequestRepo;
             _emailService = emailService;
         }
-        public void Execute(RegisterRequestCommand registerCommand)
+        public async Task Execute(RegisterRequestCommand registerCommand)
         {
             string verificationcode = VerificationCodeGenerator.Generate();
             RegistrationRequest registrationRequest = RegistrationRequest.Create(registerCommand.Name, registerCommand.Email
                 , registerCommand.Address, registerCommand.contactinfoemail, registerCommand.contactinfophonenumber, verificationcode);
-            _registrationRequestRepo.AddRequest(registrationRequest);
+            await _registrationRequestRepo.AddRequest(registrationRequest);
             _emailService.SendConfirmationEmail(registrationRequest.Email, registrationRequest.Id, registrationRequest.VerificationCode);
 
         }
