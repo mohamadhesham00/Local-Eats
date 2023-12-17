@@ -1,4 +1,4 @@
-﻿namespace RestaurantManagementSystem.src.Core.RestaurantRequest.Exceptions
+﻿namespace RestaurantManagementSystem.Core.RestaurantRequest.Exceptions
 {
     public class RegistrationRequestNotFoundException : Exception
     {

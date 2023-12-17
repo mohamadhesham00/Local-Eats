@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using RestaurantManagementSystem.src.Core.RestaurantManagement.Entities;
-using RestaurantManagementSystem.src.Infrastructure.Common.Db;
+using RestaurantManagementSystem.Core.RestaurantManagement.Entities;
+using RestaurantManagementSystem.Infrastructure.Common.Db;
 
 #nullable disable
 
@@ -45,8 +45,9 @@ namespace RestaurantManagementSystem.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("VerificationCode")
                         .IsRequired()
@@ -67,18 +68,15 @@ namespace RestaurantManagementSystem.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<double>("AvgRating")
+                    b.Property<double?>("AvgRating")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<List<DeliveryTime>>("DeliveryTime")
-                        .IsRequired()
                         .HasColumnType("jsonb");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -158,12 +156,10 @@ namespace RestaurantManagementSystem.Migrations
                                 .HasColumnType("uuid");
 
                             b1.Property<string>("ContactEmail")
-                                .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("ContactEmail");
 
                             b1.Property<string>("ContactPhoneNumber")
-                                .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("ContactPhoneNumber");
 
@@ -183,9 +179,7 @@ namespace RestaurantManagementSystem.Migrations
                 {
                     b.HasOne("RestaurantManagementSystem.src.Core.RestaurantManagement.Entities.Restaurant", "Restaurant")
                         .WithMany("Menu")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RestaurantId");
 
                     b.Navigation("Restaurant");
                 });

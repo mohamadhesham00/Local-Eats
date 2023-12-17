@@ -1,7 +1,7 @@
-﻿namespace RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.EmailConfirmation
+﻿namespace RestaurantManagementSystem.Application.UseCases.RestaurantRequest.EmailConfirmation
 {
     public interface IVerifyRequestCommandHandler
     {
-        public void VerifyRegistrationRequest(VerifyRequestCommand confirmationCommand);
+        public Task VerifyRegistrationRequest(VerifyRequestCommand confirmationCommand);
     }
 }

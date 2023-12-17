@@ -1,8 +1,7 @@
-﻿using RestaurantManagementSystem.src.Core.Common.Entities;
-using RestaurantManagementSystem.src.Core.RestaurantManagement.Entities;
-using RestaurantManagementSystem.src.Core.RestaurantManagement.Entities;
+﻿using RestaurantManagementSystem.Core.Common.Entities;
+using RestaurantManagementSystem.Core.RestaurantManagement.Entities;
 
-namespace RestaurantManagementSystem.src.Core.RestaurantManagement.Builder
+namespace RestaurantManagementSystem.Core.RestaurantManagement.Builder
 {
     public class RestaurantBuilder
     {

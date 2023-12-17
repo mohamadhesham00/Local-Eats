@@ -1,6 +1,4 @@
-﻿using System.Xml.Linq;
-
-namespace RestaurantManagementSystem.src.Core.RestaurantManagement.Entities
+﻿namespace RestaurantManagementSystem.Core.RestaurantManagement.Entities
 {
     public class RestaurantMenuItem
     { 
@@ -14,5 +12,6 @@ namespace RestaurantManagementSystem.src.Core.RestaurantManagement.Entities
         //NavigationProperty
         public Restaurant Restaurant;
 
+        
     }
 }

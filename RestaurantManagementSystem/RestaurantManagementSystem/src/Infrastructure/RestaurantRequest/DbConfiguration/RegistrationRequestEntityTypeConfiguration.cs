@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RestaurantManagementSystem.src.Core.Entities;
-using RestaurantManagementSystem.src.Infrastructure.Common.Db;
+using RestaurantManagementSystem.Core.RestaurantRequest.Entities;
 
-namespace RestaurantManagementSystem.src.Infrastructure.Configuration
+namespace RestaurantManagementSystem.Infrastructure.RestaurantRequest.DbConfiguration
 {
     public class RegistrationRequestEntityTypeConfiguration : IEntityTypeConfiguration<RegistrationRequest>
     {
@@ -22,7 +21,7 @@ namespace RestaurantManagementSystem.src.Infrastructure.Configuration
             });
             
             RegistrationRequestconfiguration.Property(r => r.VerificationCode);
-            RegistrationRequestconfiguration.Property(r => r.Status);
+            RegistrationRequestconfiguration.Property(r => r.Status).HasConversion<string>();
             RegistrationRequestconfiguration.Property(r => r.DateCreated);
             RegistrationRequestconfiguration.Property(r => r.VerificationCodeExpiresAt);
 

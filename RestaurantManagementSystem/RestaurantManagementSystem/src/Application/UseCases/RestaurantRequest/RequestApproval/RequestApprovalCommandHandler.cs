@@ -1,27 +1,30 @@
-﻿using RestaurantManagementSystem.src.Core.Contracts;
-using RestaurantManagementSystem.src.Core.Entities;
-using RestaurantManagementSystem.src.Core.RestaurantRequest.Exceptions;
+﻿using RestaurantManagementSystem.Core.RestaurantRequest.Contracts;
+using RestaurantManagementSystem.Core.RestaurantRequest.Entities;
 
-namespace RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.RequestApproval
+namespace RestaurantManagementSystem.Application.UseCases.RestaurantRequest.RequestApproval
 {
     public class RequestApprovalCommandHandler : IRequestApprovalCommandHandler
     {
-        private readonly IRegistrationRequestRepo _registrationRequestRepo;
-        public RequestApprovalCommandHandler(IRegistrationRequestRepo registrationRequestRepo)
+        private readonly IRegistrationRequestReadRepo _registrationRequestReadRepo;
+        private readonly IRegistrationRequestWriteRepo _registrationRequestWriteReadRepo;
+        public RequestApprovalCommandHandler(IRegistrationRequestReadRepo registrationRequestReadRepo
+            , IRegistrationRequestWriteRepo registrationRequestWriteReadRepo)
         {
-            _registrationRequestRepo = registrationRequestRepo;
+            _registrationRequestReadRepo = registrationRequestReadRepo;
+            _registrationRequestWriteReadRepo = registrationRequestWriteReadRepo;
+
         }
         public async Task ApproveRequest(string id)
         {
             try
             {
 
-                RegistrationRequest registrationRequest = await _registrationRequestRepo.FindByIdAsync(id);
+                RegistrationRequest registrationRequest = await _registrationRequestReadRepo.FindByIdAsync(id);
                 registrationRequest.ApproveRequest();
-                _registrationRequestRepo.Update(registrationRequest);
+                await _registrationRequestWriteReadRepo.Update(registrationRequest);
             }catch (Exception ex)
             {
-                throw new RegistrationRequestNotFoundException();
+                throw new Exception(message: ex.Message);
             }
         }
     }

@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.EmailConfirmation;
-using RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.GetRegistrationRequests;
-using RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.Register;
-using RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.RequestApproval;
-using RestaurantManagementSystem.src.Core.Contracts;
-using RestaurantManagementSystem.src.Core.Entities;
+using RestaurantManagementSystem.Application.UseCases.RestaurantRequest.EmailConfirmation;
+using RestaurantManagementSystem.Application.UseCases.RestaurantRequest.GetRegistrationRequests;
+using RestaurantManagementSystem.Application.UseCases.RestaurantRequest.Register;
+using RestaurantManagementSystem.Application.UseCases.RestaurantRequest.RequestApproval;
 
-namespace RestaurantManagementSystem.src.web.Controllers.RestaurantRequest.RestaurantRequestController
+namespace RestaurantManagementSystem.web.Controllers.RestaurantRequest
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -29,20 +27,27 @@ namespace RestaurantManagementSystem.src.web.Controllers.RestaurantRequest.Resta
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestCommand registerCommand)
         {
-            _requesthandler.Execute(registerCommand);
-            return Ok();
+            try
+            {
+                await _requesthandler.Execute(registerCommand);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPost("VerifyRequest")]
         public async Task<IActionResult> VerifyRequest([FromBody] VerifyRequestCommand confirmationCommand)
         {
             try
             {
-                _vertifyrequestcommandhandler.VerifyRegistrationRequest(confirmationCommand);
-                return Ok(new { Message = "Email Confirmed Sucessfully" });
+                await _vertifyrequestcommandhandler.VerifyRegistrationRequest(confirmationCommand);
+                return Ok(new { message = "Email Confirmed Successfully" });
 
             }catch (Exception ex)
             {
-                return BadRequest(new { Message = ex.Message });
+                return BadRequest(new { message = ex.Message });
                 
             }
         }
@@ -55,16 +60,16 @@ namespace RestaurantManagementSystem.src.web.Controllers.RestaurantRequest.Resta
         }
 
         [HttpPost("RegistrationRequests/{id}/approve")]
-        public async Task<IActionResult> approve(string id)
+        public async Task<IActionResult> Approve(string id)
         {
             try
             {
-                _requestApprovalCommandHandler.ApproveRequest(id);
-                return Ok(new { Message = "Requset Approved Sucessfully" });
+                await _requestApprovalCommandHandler.ApproveRequest(id);
+                return Ok(new { Message = "Request Approved Successfully" });
             }
             catch (Exception ex)
             {
-                return BadRequest(new { Message = ex.Message });
+                return BadRequest(new { message = ex.Message });
 
             }
             

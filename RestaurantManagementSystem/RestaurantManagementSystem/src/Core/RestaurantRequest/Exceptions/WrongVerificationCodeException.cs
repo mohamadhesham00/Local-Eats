@@ -1,4 +1,4 @@
-﻿namespace RestaurantManagementSystem.src.Core.Exceptions
+﻿namespace RestaurantManagementSystem.Core.RestaurantRequest.Exceptions
 {
     public class WrongVerificationCodeException : Exception
     {

@@ -1,33 +1,34 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using RestaurantManagementSystem.src.Infrastructure.Common.Services;
-using shortid.Configuration;
-using shortid;
-using RestaurantManagementSystem.src.Core.Contracts;
-using RestaurantManagementSystem.src.Core.Contracts;
-using RestaurantManagementSystem.src.Core.Entities;
-using RestaurantManagementSystem.src.Infrastructure.RestaurantRequest.Services.CodeGenerator;
+﻿using RestaurantManagementSystem.Core.RestaurantRequest.Contracts;
+using RestaurantManagementSystem.Core.RestaurantRequest.Entities;
+using RestaurantManagementSystem.Infrastructure.Common.Services.VerificationCodeGenerator;
+using RestaurantManagementSystem.Core.Common.Contracts.Services.EmailService;
 
-namespace RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.Register
+namespace RestaurantManagementSystem.Application.UseCases.RestaurantRequest.Register
 {
     public class RegisterRequestCommandHandler : IRegisterRequestCommandHandler
     {
-        private readonly IRegistrationRequestRepo _registrationRequestRepo;
+        private readonly IRegistrationRequestWriteRepo _registrationRequestRepo;
         private readonly IEmailService _emailService;
 
-        public RegisterRequestCommandHandler(IRegistrationRequestRepo registrationRequestRepo, IEmailService emailService)
+        public RegisterRequestCommandHandler(IRegistrationRequestWriteRepo registrationRequestRepo, IEmailService emailService)
         {
-            _registrationRequestRepo = _registrationRequestRepo;
+            _registrationRequestRepo = registrationRequestRepo;
             _emailService = emailService;
         }
-        public void Execute(RegisterRequestCommand registerCommand)
+        public async Task Execute(RegisterRequestCommand registerCommand)
         {
-            string verificationcode = VerificationCodeGenerator.Generate();
-            RegistrationRequest registrationRequest = RegistrationRequest.Create(registerCommand.Name, registerCommand.Email
-                , registerCommand.Address, registerCommand.contactinfoemail, registerCommand.contactinfophonenumber, verificationcode);
-            _registrationRequestRepo.AddRequest(registrationRequest);
-            _emailService.SendConfirmationEmail(registrationRequest.Email, registrationRequest.Id, registrationRequest.VerificationCode);
-
+            try
+            { 
+                string verificationcode = VerificationCodeGenerator.Generate();
+                RegistrationRequest registrationRequest = RegistrationRequest.Create(registerCommand.Name, registerCommand.Email
+                    , registerCommand.Address, registerCommand.contactinfoemail, registerCommand.contactinfophonenumber, verificationcode);
+                await _registrationRequestRepo.AddRequest(registrationRequest);
+                await _emailService.SendConfirmationEmail(registrationRequest.Email, registrationRequest.Id, registrationRequest.VerificationCode);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

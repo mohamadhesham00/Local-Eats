@@ -1,23 +1,21 @@
-﻿using RestaurantManagementSystem.src.Core.Contracts;
-using RestaurantManagementSystem.src.Core.Entities;
-using RestaurantManagementSystem.src.Infrastructure.Common.Db;
-using RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest;
+﻿using RestaurantManagementSystem.Core.RestaurantRequest.Contracts;
+using RestaurantManagementSystem.Core.RestaurantRequest.Entities;
 
-namespace RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.GetRegistrationRequests
+namespace RestaurantManagementSystem.Application.UseCases.RestaurantRequest.GetRegistrationRequests
 {
     public class GetRequestsHandler : IGetRequestsHandler
     {
-        private readonly IRegistrationRequestRepo _registrationrequestrepo;
-        public GetRequestsHandler(IRegistrationRequestRepo registrationrequestrepo)
+        private readonly IRegistrationRequestReadRepo _registrationrequestReadrepo;
+        public GetRequestsHandler(IRegistrationRequestReadRepo registrationrequestReadrepo)
         {
-            _registrationrequestrepo = registrationrequestrepo;
+            _registrationrequestReadrepo = registrationrequestReadrepo;
         }
 
         public async Task<List<RestaurantRegistrationResponseDTO>> GetRequests()
         {
-            List<RegistrationRequest> requests = await _registrationrequestrepo.GetRegistrationRequestsAsync();
+            List<RegistrationRequest> requests = await _registrationrequestReadrepo.GetRegistrationRequestsAsync();
 
-            return RestaurantRegistrationResponseDTO.from(requests);
+            return RestaurantRegistrationResponseDTO.From(requests);
         }
     }
 }

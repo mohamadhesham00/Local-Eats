@@ -22,8 +22,14 @@
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
 	  <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
+	  <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
 	  <PackageReference Include="shortid" Version="4.0.0" />
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="src\Infrastructure\Common\Db\Migrations\" />
+    <Folder Include="src\web\NewFolder\" />
   </ItemGroup>
 
 </Project>

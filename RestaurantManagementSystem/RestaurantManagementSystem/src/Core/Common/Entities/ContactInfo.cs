@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Runtime.InteropServices;
-
-namespace RestaurantManagementSystem.src.Core.Common.Entities
+﻿namespace RestaurantManagementSystem.Core.Common.Entities
 {
     public class ContactInfo
     {

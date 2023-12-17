@@ -1,8 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
+﻿using DayOfWeek = RestaurantManagementSystem.Core.Common.Entities.DayOfWeek;
 
-namespace RestaurantManagementSystem.src.Core.RestaurantManagement.Entities
+namespace RestaurantManagementSystem.Core.RestaurantManagement.Entities
 {
     public class DeliveryTime
     {

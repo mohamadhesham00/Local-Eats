@@ -1,6 +1,4 @@
-﻿using RestaurantManagementSystem.src.Core.Entities;
-
-namespace RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.GetRegistrationRequests
+﻿namespace RestaurantManagementSystem.Application.UseCases.RestaurantRequest.GetRegistrationRequests
 {
     public interface IGetRequestsHandler
     {

@@ -1,7 +1,4 @@
-﻿using RestaurantManagementSystem.src.Core.Entities;
-using System.ComponentModel.DataAnnotations;
-
-namespace RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.Register
+﻿namespace RestaurantManagementSystem.Application.UseCases.RestaurantRequest.Register
 {
     public class RegisterRequestCommand
     {
