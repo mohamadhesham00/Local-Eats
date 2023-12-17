@@ -1,9 +1,9 @@
-﻿using shortid.Configuration;
-using shortid;
+﻿using shortid;
+using shortid.Configuration;
 
-namespace RestaurantManagementSystem.src.Infrastructure.RestaurantRequest.Services.CodeGenerator
+namespace RestaurantManagementSystem.Infrastructure.Common.Services.VerificationCodeGenerator
 {
-    public class VerificationCodeGenerator
+    public static class VerificationCodeGenerator
     {
         public static string Generate()
         {

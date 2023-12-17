@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RestaurantManagementSystem.src.Core.Entities;
-using RestaurantManagementSystem.src.Core.RestaurantManagement.Entities;
-using RestaurantManagementSystem.src.Core.RestaurantManagement.Entities;
-using RestaurantManagementSystem.src.Infrastructure.Configuration;
-using RestaurantManagementSystem.src.Infrastructure.RestaurantManagement.DbConfiguration;
+using RestaurantManagementSystem.Core.RestaurantManagement.Entities;
+using RestaurantManagementSystem.Core.RestaurantRequest.Entities;
+using RestaurantManagementSystem.Infrastructure.RestaurantManagement.DbConfiguration;
+using RestaurantManagementSystem.Infrastructure.RestaurantRequest.DbConfiguration;
 
-namespace RestaurantManagementSystem.src.Infrastructure.Common.Db
+namespace RestaurantManagementSystem.Infrastructure.Common.Db
 {
     public class ApplicationDbContext :DbContext
     {

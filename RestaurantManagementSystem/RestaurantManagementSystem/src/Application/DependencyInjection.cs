@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace RestaurantManagementSystem.src.Application
+﻿namespace RestaurantManagementSystem.Application
 {
     public static class DependencyInjection
     {

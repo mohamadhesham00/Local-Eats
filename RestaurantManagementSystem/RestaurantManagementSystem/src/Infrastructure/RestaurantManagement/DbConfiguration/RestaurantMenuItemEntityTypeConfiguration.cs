@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RestaurantManagementSystem.src.Core.RestaurantManagement.Entities;
+using RestaurantManagementSystem.Core.RestaurantManagement.Entities;
 
-namespace RestaurantManagementSystem.src.Infrastructure.RestaurantManagement.DbConfiguration
+namespace RestaurantManagementSystem.Infrastructure.RestaurantManagement.DbConfiguration
 {
     public class RestaurantMenuItemEntityTypeConfiguration : IEntityTypeConfiguration<RestaurantMenuItem>
     {

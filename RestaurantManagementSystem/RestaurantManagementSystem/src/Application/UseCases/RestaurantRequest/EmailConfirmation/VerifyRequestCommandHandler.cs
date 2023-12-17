@@ -1,28 +1,30 @@
-﻿using RestaurantManagementSystem.src.Core.Contracts;
-using RestaurantManagementSystem.src.Core.Exceptions;
-using RestaurantManagementSystem.src.Core.Contracts;
-using RestaurantManagementSystem.src.Core.Entities;
-using RestaurantManagementSystem.src.Infrastructure.Common.Services;
+﻿using RestaurantManagementSystem.Core.RestaurantRequest.Contracts;
+using RestaurantManagementSystem.Core.RestaurantRequest.Entities;
+using RestaurantManagementSystem.Core.Common.Contracts.Services.EmailService;
 
-namespace RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.EmailConfirmation
+namespace RestaurantManagementSystem.Application.UseCases.RestaurantRequest.EmailConfirmation
 {
     public class VerifyRequestCommandHandler : IVerifyRequestCommandHandler
     {
-        private readonly IRegistrationRequestRepo _registrationRequestRepo;
+        private readonly IRegistrationRequestReadRepo _registrationRequestReadRepo;
+        private readonly IRegistrationRequestWriteRepo _registrationRequestWriteRepo;
         private readonly IEmailService _emailservice;
-        public VerifyRequestCommandHandler(IRegistrationRequestRepo restaurantRepo, IEmailService emailservice)
+        public VerifyRequestCommandHandler(IRegistrationRequestReadRepo restaurantReadRepo
+            , IRegistrationRequestWriteRepo registrationRequestWriteRepo
+            , IEmailService emailService)
         {
-            _registrationRequestRepo = restaurantRepo;
-            _emailservice = emailservice;
+            _registrationRequestReadRepo = restaurantReadRepo;
+            _registrationRequestWriteRepo = registrationRequestWriteRepo;
+            _emailservice = emailService;
         }
         public async Task VerifyRegistrationRequest(VerifyRequestCommand confirmationCommand)
         {
             try
             {
-                RegistrationRequest registrationRequest = await _registrationRequestRepo.FindByIdAsync(confirmationCommand.RequestId);
+                RegistrationRequest registrationRequest = await _registrationRequestReadRepo.FindByIdAsync(confirmationCommand.RequestId);
                 registrationRequest.VertifyCode(confirmationCommand.VerificationCode);
-                await _registrationRequestRepo.Update(registrationRequest);
-                _emailservice.SendEmailConfirmedEmail(registrationRequest.Email);
+                await _registrationRequestWriteRepo.Update(registrationRequest);
+                await _emailservice.SendEmailConfirmedEmail(registrationRequest.Email);
             }
             catch (Exception ex)
             {

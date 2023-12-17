@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
-using RestaurantManagementSystem.src.Core.RestaurantManagement.Entities;
+using RestaurantManagementSystem.Core.RestaurantManagement.Entities;
 
 #nullable disable
 

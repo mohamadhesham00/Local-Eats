@@ -1,13 +1,13 @@
-﻿using RestaurantManagementSystem.src.Core.RestaurantManagement.Entities;
-using RestaurantManagementSystem.src.Core.RestaurantManagement.Contracts;
-using RestaurantManagementSystem.src.Infrastructure.Common.Db;
+﻿using RestaurantManagementSystem.Core.RestaurantManagement.Contracts;
+using RestaurantManagementSystem.Core.RestaurantManagement.Entities;
+using RestaurantManagementSystem.Infrastructure.Common.Db;
 
-namespace RestaurantManagementSystem.src.Infrastructure.RestaurantManagement.Repositories
+namespace RestaurantManagementSystem.Infrastructure.RestaurantManagement.Repositories
 {
-    public class RestaurantRepo : IRestaurantRepo
+    public class RestaurantWriteRepo : IRestaurantWriteRepo
     {
         private readonly ApplicationDbContext _db;
-        public RestaurantRepo(ApplicationDbContext db)
+        public RestaurantWriteRepo(ApplicationDbContext db)
         {
             _db = db;
             

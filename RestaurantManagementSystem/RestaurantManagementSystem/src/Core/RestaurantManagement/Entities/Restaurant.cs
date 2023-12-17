@@ -1,11 +1,7 @@
-﻿
-using RestaurantManagementSystem.src.Core.Common.Entities;
-using RestaurantManagementSystem.src.Core.RestaurantManagement.Entities;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices;
-using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using RestaurantManagementSystem.Core.Common.Entities;
 
-namespace RestaurantManagementSystem.src.Core.RestaurantManagement.Entities
+namespace RestaurantManagementSystem.Core.RestaurantManagement.Entities
 {
     public class Restaurant
     {

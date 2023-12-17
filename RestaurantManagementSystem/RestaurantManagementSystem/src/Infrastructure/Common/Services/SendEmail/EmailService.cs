@@ -1,11 +1,10 @@
-﻿using System.Net.Mail;
-using System.Net;
-using Microsoft.AspNetCore.Http.HttpResults;
-using RestaurantManagementSystem.src.Core.Entities;
-using RestaurantManagementSystem.src.Core.Exceptions;
-using RestaurantManagementSystem.src.Core.Contracts;
+﻿using System.Net;
+using System.Net.Mail;
+using RestaurantManagementSystem.Core.Common.Exceptions;
+using RestaurantManagementSystem.Core.Common.Contracts.Services.EmailService;
+using RestaurantManagementSystem.Core.Common.Exceptions.EmailExceptions;
 
-namespace RestaurantManagementSystem.src.Infrastructure.Common.Services
+namespace RestaurantManagementSystem.Infrastructure.Common.Services.SendEmail
 {
     public class EmailService : IEmailService
     {
@@ -15,38 +14,43 @@ namespace RestaurantManagementSystem.src.Infrastructure.Common.Services
             _conf = conf;
         }
 
-        public void SendConfirmationEmail(string recipientEmail, Guid Id, string VerificationCode)
+        public async Task SendConfirmationEmail(string recipientEmail, Guid id, string verificationCode)
         {
-            string MessageBody = "You need to vertify your Email to Complete Your Request \n Your Request ID is : " + Id + "\n" + " Your code is " + VerificationCode;
-            string MessageSubject = "Email Confirmation";
-            SendEmail(recipientEmail, MessageSubject,MessageBody);
+            string messageBody = "You need to verify your Email to Complete Your Request \n Your Request ID is : " + id + "\n" 
+                                 + " Your code is " + verificationCode;
+            string messageSubject = "Email Confirmation";
+            await SendEmail(recipientEmail, messageSubject,messageBody);
         }
 
 
-        public void SendEmailConfirmedEmail (string recipientEmail) {
-            string MessageSubject = "Email Confirmed";
-            string MessageBody = "Email Confirmed Successfullly \n Your Restaurant is now on the waiting list";
-            SendEmail(recipientEmail, MessageSubject,MessageBody);
+        public async Task SendEmailConfirmedEmail (string recipientEmail) {
+            string messageSubject = "Email Confirmed";
+            string messageBody = "Email Confirmed Successfully \n Your Restaurant is now on the waiting list";
+            await SendEmail(recipientEmail, messageSubject,messageBody);
         }
-        private async Task SendEmail (string recipientEmail,string MessageSubject,string MessageBody)
+        private async Task SendEmail (string recipientEmail,string messageSubject,string messageBody)
         {
             string? senderEmail = _conf["SmtpSettings:Email"];
             string? senderPassword = _conf["SmtpSettings:Password"];
             string? smtpServer = _conf["SmtpSettings:Server"];
-            int smtpPort = int.Parse(_conf["SmtpSettings:Port"]);
+            int smtpPort = int.Parse(_conf["SmtpSettings:Port"] ?? throw new InvalidOperationException());
             using (SmtpClient smtpClient = new SmtpClient(smtpServer, smtpPort))
             {
                 smtpClient.Credentials = new NetworkCredential(senderEmail, senderPassword);
                 smtpClient.EnableSsl = true;
+                if (senderEmail is null)
+                {
+                    throw new EmailNotFoundException();
+                }
                 MailMessage mailMessage = new MailMessage(from: senderEmail, to: recipientEmail
-                 , subject:MessageSubject, body: MessageBody);
+                 , subject:messageSubject, body: messageBody);
                 
                 try
                 {
                     await smtpClient.SendMailAsync(mailMessage);
                     
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     throw new EmailSendingException();
                 }

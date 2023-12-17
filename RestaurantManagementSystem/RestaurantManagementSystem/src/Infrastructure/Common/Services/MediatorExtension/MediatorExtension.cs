@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using RestaurantManagementSystem.src.Core.Entities;
-using RestaurantManagementSystem.src.Infrastructure.Common.Db;
+using RestaurantManagementSystem.Core.RestaurantRequest.Entities;
+using RestaurantManagementSystem.Infrastructure.Common.Db;
 
-namespace RestaurantManagementSystem.src.Infrastructure.Common.Services.MediatorExtension
+namespace RestaurantManagementSystem.Infrastructure.Common.Services.MediatorExtension
 {
     static class MediatorExtension
     {

@@ -1,8 +1,8 @@
-﻿using RestaurantManagementSystem.src.Core.Common.Entities;
-using RestaurantManagementSystem.src.Core.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using RestaurantManagementSystem.Core.Common.Entities;
+using RestaurantManagementSystem.Core.RestaurantRequest.Entities;
 
-namespace RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.GetRegistrationRequests
+namespace RestaurantManagementSystem.Application.UseCases.RestaurantRequest.GetRegistrationRequests
 {
     public class RestaurantRegistrationResponseDTO
     {
@@ -29,7 +29,7 @@ namespace RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.
             Status = status;
             DateCreated = dateCreated;
         }
-        public static List<RestaurantRegistrationResponseDTO> from(List<RegistrationRequest> registrationRequests)
+        public static List<RestaurantRegistrationResponseDTO> From(List<RegistrationRequest> registrationRequests)
         {
             List<RestaurantRegistrationResponseDTO> RestautantRegistrationResponseDtos = new List<RestaurantRegistrationResponseDTO>();
 

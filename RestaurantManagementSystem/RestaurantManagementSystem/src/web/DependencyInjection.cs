@@ -1,4 +1,4 @@
-﻿namespace RestaurantManagementSystem.src.web
+﻿namespace RestaurantManagementSystem.web
 {
     public static class DependencyInjection
     {

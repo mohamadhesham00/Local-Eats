@@ -1,4 +1,4 @@
-﻿namespace RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.RequestApproval
+﻿namespace RestaurantManagementSystem.Application.UseCases.RestaurantRequest.RequestApproval
 {
     public interface IRequestApprovalCommandHandler
     {

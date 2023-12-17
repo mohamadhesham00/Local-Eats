@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RestaurantManagementSystem.Migrations;
-using RestaurantManagementSystem.src.Core.Contracts;
-using RestaurantManagementSystem.src.Infrastructure.Common.Services;
-using System.Runtime.CompilerServices;
+using RestaurantManagementSystem.Infrastructure.Common.Services.SendEmail;
+using RestaurantManagementSystem.Core.Common.Contracts.Services.EmailService;
 
-namespace RestaurantManagementSystem.src.Infrastructure.Common.Db
+namespace RestaurantManagementSystem.Infrastructure.Common.Db
 {
     public static class DependencyInjection
     {

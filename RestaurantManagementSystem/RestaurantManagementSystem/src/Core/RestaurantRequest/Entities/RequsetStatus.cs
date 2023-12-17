@@ -1,4 +1,6 @@
-﻿public enum RegistrationRequestStatus
+﻿namespace RestaurantManagementSystem.Core.RestaurantRequest.Entities;
+
+public enum RegistrationRequestStatus
 {
     PendingVerification,
     WaitingForAdminResponse,

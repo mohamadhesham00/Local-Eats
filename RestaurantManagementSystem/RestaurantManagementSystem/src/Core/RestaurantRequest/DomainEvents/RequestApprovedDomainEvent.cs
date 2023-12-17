@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using RestaurantManagementSystem.src.Core.Entities;
+using RestaurantManagementSystem.Core.RestaurantRequest.Entities;
 
-namespace RestaurantManagementSystem.src.Core.RestaurantRequest.DomainEvents
+namespace RestaurantManagementSystem.Core.RestaurantRequest.DomainEvents
 {
     public class RequestApprovedDomainEvent : INotification
     {

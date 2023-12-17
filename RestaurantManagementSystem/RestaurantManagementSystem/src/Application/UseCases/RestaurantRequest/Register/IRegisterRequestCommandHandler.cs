@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using RestaurantManagementSystem.src.Core.Entities;
-
-namespace RestaurantManagementSystem.src.Application.UseCases.RestaurantRequest.Register
+﻿namespace RestaurantManagementSystem.Application.UseCases.RestaurantRequest.Register
 {
     public interface IRegisterRequestCommandHandler
     {
