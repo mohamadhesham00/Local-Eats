@@ -63,6 +63,3 @@ To run Local Eats locally, follow these steps:
 
 Local Eats represents a significant step in developing a modern, scalable food ordering system. The adoption of DDD architecture and the incorporation of various technologies and concepts make this project an exciting showcase of current industry best practices. I am eager to discuss the project in more detail and share insights into how it reflects my skills and capabilities as a developer.
 
-Thank you for considering my work.
-
-*Your Name*
