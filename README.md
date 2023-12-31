@@ -14,10 +14,6 @@ Welcome to the README for Local Eats, a cutting-edge food ordering system curren
 
 ### Technologies Used
 
-#### Front-end
-
-- **HTML5 and CSS3:** Standard technologies for structuring and styling the user interface.
-
 #### Back-end
 
 - **.NET Framework:** A robust framework for building Windows applications and web applications.
